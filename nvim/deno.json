@@ -1,0 +1,11 @@
+{
+    "fmt": {
+        "useTabs": false,
+        "lineWidth": 80,
+        "indentWidth": 4,
+        "semiColons": true,
+        "singleQuote": false,
+        "proseWrap": "preserve",
+        "exclude": ["src/testdata/", "data/fixtures/**/*.ts"]
+    }
+}

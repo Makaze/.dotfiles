@@ -1,0 +1,29 @@
+{
+    "Add a Lazy.nvim plugin": {
+        "prefix": "lazy",
+        "body": [
+            "{",
+            "\t\"${1}\",",
+            "\tconfig = ${2:true},",
+            "\tevent = \"VeryLazy\"",
+            "},$0"
+        ],
+        "description": "Add a new Lazy.nvim plugin"
+    },
+    "Anonymous function": {
+        "prefix": "afunc",
+        "body": [
+            "function()",
+            "\t${1:-- code}",
+            "end"
+        ],
+        "description": "Add an anonymous Lua function"
+    },
+    "Plugin opts": {
+        "prefix": "opts",
+        "body": [
+            "opts = {$0}"
+        ],
+        "description": "Insert options table for an nvim plugin"
+    }
+}

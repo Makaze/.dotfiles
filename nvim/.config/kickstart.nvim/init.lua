@@ -433,6 +433,10 @@ vim.cmd [[
   " match ErrorMsg '\%>80v.\+'
 ]]
 
+-- Move selection in visual mode
+vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv", { silent = true })
+vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv", { silent = true })
+
 -- Credit to @maaaddi from ThePrimeagen Discord
 local function cursor_lock(lock)
   return function()

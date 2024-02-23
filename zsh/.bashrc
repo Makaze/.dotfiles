@@ -175,7 +175,14 @@ set -o vi
 export DENO_INSTALL="/home/makaze/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
 
+<<<<<<< HEAD
 export PATH="$HOME/go/bin:$PATH"
 export PATH="/usr/local/go/bin:$PATH"
 
 source $HOME/.profile
+=======
+# go
+export PATH="/usr/local/go/bin:$PATH"
+export PATH="~/go/bin:$PATH"
+
+>>>>>>> 370ad36a31f51b07d28fcbb7f68c523c4af5901d

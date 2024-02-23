@@ -21,3 +21,4 @@ alias f='fuck'
 alias kickstart-nvim='NVIM_APPNAME="kickstart.nvim" nvim'
 
 source ~/.sensitive_aliases
+alias ncspot='flatpak run io.github.hrkfdn.ncspot'

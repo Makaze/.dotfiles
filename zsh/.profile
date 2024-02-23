@@ -39,3 +39,4 @@ export PATH=$PATH:/home/makaze/go/bin
 
 export VISUAL=nvim
 export EDITOR="$VISUAL"
+

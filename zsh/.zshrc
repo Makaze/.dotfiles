@@ -240,3 +240,5 @@ export PATH="$DENO_INSTALL/bin:$PATH"
 # dprint
 export DPRINT_INSTALL="/home/makaze/.dprint"
 export PATH="$DPRINT_INSTALL/bin:$PATH"
+
+source $HOME/.profile

@@ -160,3 +160,19 @@ vim.cmd [[
 -- vim.keymap.set("v", "<leader>fs", function()
 --   vim.lsp.buf.format { async = true }
 -- end)
+
+
+vim.cmd([[
+" Automatically update the "a" register with the current selection
+function! UpdateARegister()
+    if mode() ==# 'v' || mode() ==# 'V' || mode() ==# "\<C-V>"
+        let @a = @"
+    endif
+endfunction
+
+" Update "a" register when entering visual mode
+autocmd! CursorMoved * call UpdateARegister()
+
+" Update "a" register when text is selected with the mouse
+autocmd! TextYankPost * call UpdateARegister()
+]])

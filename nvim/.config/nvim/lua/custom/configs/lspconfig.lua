@@ -12,6 +12,7 @@ local servers = {
   -- "ruff_lsp",
   "pyright",
   -- "deno",
+  "tsserver",
 }
 
 for _, lsp in ipairs(servers) do

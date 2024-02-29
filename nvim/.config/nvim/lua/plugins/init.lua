@@ -771,10 +771,22 @@ local default_plugins = {
         },
   },
 
+  -- {
+  --   "simrat39/symbols-outline.nvim",
+  --   config = true,
+  --   cmd = { "SymbolsOutline" },
+  -- },
+
   {
-    "simrat39/symbols-outline.nvim",
-    config = true,
-    cmd = { "SymbolsOutline" },
+    "hedyhli/outline.nvim",
+    lazy = true,
+    cmd = { "Outline", "OutlineOpen" },
+    keys = { -- Example mapping to toggle outline
+      { "<leader>o", "<cmd>Outline<CR>", desc = "Toggle outline" },
+    },
+    opts = {
+      -- Your setup opts here
+    },
   },
 
   {
@@ -1013,6 +1025,14 @@ local default_plugins = {
     config = function(_, opts)
       require("dap-python").setup "~/.virtualenvs/debugpy/bin/python"
     end,
+    event = "VeryLazy",
+    dependencies = { "mfussenegger/nvim-dap", "rcarriga/nvim-dap-ui" },
+  },
+
+  -- Go debug
+  {
+    "leoluz/nvim-dap-go",
+    config = true,
     event = "VeryLazy",
     dependencies = { "mfussenegger/nvim-dap", "rcarriga/nvim-dap-ui" },
   },

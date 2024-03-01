@@ -439,6 +439,22 @@ local default_plugins = {
     event = "VeryLazy",
   },
 
+  {
+    "folke/zen-mode.nvim",
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    },
+    event = "VeryLazy",
+  },
+
+  {
+    "shortcuts/no-neck-pain.nvim",
+    version = "*",
+    event = "VeryLazy",
+  },
+
   -- file managing , picker etc
   {
     "nvim-tree/nvim-tree.lua",
@@ -667,6 +683,28 @@ local default_plugins = {
   --   config = false,
   --   lazy = false,
   -- },
+  {
+    "tpope/vim-dadbod",
+    config = false,
+    event = false,
+  },
+  {
+    "kristijanhusak/vim-dadbod-ui",
+    dependencies = {
+      { "tpope/vim-dadbod", lazy = true },
+      { "kristijanhusak/vim-dadbod-completion", ft = { "sql", "mysql", "plsql" }, lazy = true },
+    },
+    cmd = {
+      "DBUI",
+      "DBUIToggle",
+      "DBUIAddConnection",
+      "DBUIFindBuffer",
+    },
+    init = function()
+      -- Your DBUI configuration
+      vim.g.db_ui_use_nerd_fonts = 1
+    end,
+  },
 
   {
     "kylechui/nvim-surround",

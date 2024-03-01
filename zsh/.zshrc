@@ -242,3 +242,5 @@ export DPRINT_INSTALL="/home/makaze/.dprint"
 export PATH="$DPRINT_INSTALL/bin:$PATH"
 
 . $HOME/.profile
+
+export PATH=$PATH:/home/makaze/.spicetify

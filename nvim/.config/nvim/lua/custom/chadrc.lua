@@ -14,6 +14,8 @@ M.ui = {
     -- theme = "vscode_colored",
   },
 
+  lsp_semantic_tokens = true,
+
   hl_override = highlights.override,
   hl_add = highlights.add,
 

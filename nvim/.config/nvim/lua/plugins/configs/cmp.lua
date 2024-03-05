@@ -46,13 +46,13 @@ end
 
 local options = {
   completion = {
-    completeopt = "menuone,noselect,noinsert,preview",
+    completeopt = "menu,menuone",
   },
 
   window = {
     completion = {
       side_padding = (cmp_style ~= "atom" and cmp_style ~= "atom_colored") and 1 or 0,
-      winhighlight = "Normal:CmpPmenu,CursorLine:CmpSel,Search:PmenuSel",
+      winhighlight = "Normal:CmpPmenu,CursorLine:CmpSel,Search:None",
       scrollbar = false,
     },
     documentation = {
@@ -68,18 +68,17 @@ local options = {
 
   formatting = formatting_style,
 
-  preselect = cmp.PreselectMode.None,
-
   mapping = {
     ["<C-p>"] = cmp.mapping.select_prev_item(),
     ["<C-n>"] = cmp.mapping.select_next_item(),
     ["<C-d>"] = cmp.mapping.scroll_docs(-4),
     ["<C-f>"] = cmp.mapping.scroll_docs(4),
-    ["<C-Space>"] = cmp.mapping.confirm(),
-    ["<C-y>"] = cmp.mapping.confirm(),
+    ["<C-Space>"] = cmp.mapping.complete(),
     ["<C-e>"] = cmp.mapping.close(),
-    -- Make enter work again by disable
-    ["<CR>"] = cmp.mapping.confirm(),
+    ["<CR>"] = cmp.mapping.confirm {
+      behavior = cmp.ConfirmBehavior.Insert,
+      select = true,
+    },
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
@@ -111,7 +110,6 @@ local options = {
     { name = "buffer" },
     { name = "nvim_lua" },
     { name = "path" },
-    { name = "orgmode" },
   },
 }
 

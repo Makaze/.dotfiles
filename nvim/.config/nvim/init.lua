@@ -1,7 +1,6 @@
 require "core"
 
 local custom_init_path = vim.api.nvim_get_runtime_file("lua/custom/init.lua", false)[1]
-vim.g.python3_host_prog = "/usr/bin/python3"
 
 if custom_init_path then
   dofile(custom_init_path)
@@ -19,6 +18,4 @@ end
 
 dofile(vim.g.base46_cache .. "defaults")
 vim.opt.rtp:prepend(lazypath)
-vim.g.loaded_python_provider = 1
 require "plugins"
-require "settings"

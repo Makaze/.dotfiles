@@ -77,6 +77,9 @@ vim.cmd [[
   xnoremap s       "_s
   nnoremap x       "_x
 
+  " Visual paste always before selections
+  xnoremap p       P
+
   nnoremap <C-z>   u
   xnoremap <C-z>   u
   inoremap <C-z>   <C-o>u
@@ -161,8 +164,7 @@ vim.cmd [[
 --   vim.lsp.buf.format { async = true }
 -- end)
 
-
-vim.cmd([[
+vim.cmd [[
 " Automatically update the "a" register with the current selection
 function! UpdateARegister()
     if mode() ==# 'v' || mode() ==# 'V' || mode() ==# "\<C-V>"
@@ -175,4 +177,4 @@ autocmd! CursorMoved * call UpdateARegister()
 
 " Update "a" register when text is selected with the mouse
 autocmd! TextYankPost * call UpdateARegister()
-]])
+]]

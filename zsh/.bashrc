@@ -174,3 +174,5 @@ set -o vi
 
 export DENO_INSTALL="/home/makaze/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
+
+export PS1="$ "

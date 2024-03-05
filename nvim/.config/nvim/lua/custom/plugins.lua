@@ -3,6 +3,28 @@ local overrides = require("custom.configs.overrides")
 ---@type NvPluginSpec[]
 local plugins = {
 
+  -- builtin nvim plugins are disabled
+   builtins = {
+      "2html_plugin",
+      "getscript",
+      "getscriptPlugin",
+      "gzip",
+      "logipat",
+      -- "netrw",
+      -- "netrwPlugin",
+      -- "netrwSettings",
+      -- "netrwFileHandlers",
+      "matchit",
+      "tar",
+      "tarPlugin",
+      "rrhelper",
+      "spellfile_plugin",
+      "vimball",
+      "vimballPlugin",
+      "zip",
+      "zipPlugin",
+   },
+
   -- Override plugin definition options
 
   {

@@ -22,3 +22,7 @@ alias kickstart-nvim='NVIM_APPNAME="kickstart.nvim" nvim'
 
 source ~/.sensitive_aliases
 alias ncspot='flatpak run io.github.hrkfdn.ncspot'
+alias r='ranger'
+alias fm='ranger'
+alias s='ncspot'
+alias n='nvim'

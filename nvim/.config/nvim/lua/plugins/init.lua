@@ -55,6 +55,15 @@ local default_plugins = {
     end,
   },
 
+  -- {
+  --   "AlexvZyl/nordic.nvim",
+  --   lazy = false,
+  --   priority = 1000,
+  --   config = function()
+  --     require("nordic").load()
+  --   end,
+  -- },
+
   {
     "LunarVim/bigfile.nvim",
     config = true,
@@ -453,23 +462,29 @@ local default_plugins = {
     "shortcuts/no-neck-pain.nvim",
     version = "*",
     event = "VeryLazy",
+    opts = {
+      width = 130,
+      autocmds = {
+        -- enableOnVimEnter = true,
+      },
+    },
   },
 
   -- file managing , picker etc
-  {
-    "nvim-tree/nvim-tree.lua",
-    cmd = { "NvimTreeToggle", "NvimTreeFocus" },
-    init = function()
-      require("core.utils").load_mappings "nvimtree"
-    end,
-    opts = function()
-      return require "plugins.configs.nvimtree"
-    end,
-    config = function(_, opts)
-      dofile(vim.g.base46_cache .. "nvimtree")
-      require("nvim-tree").setup(opts)
-    end,
-  },
+  -- {
+  --   "nvim-tree/nvim-tree.lua",
+  --   cmd = { "NvimTreeToggle", "NvimTreeFocus" },
+  --   init = function()
+  --     require("core.utils").load_mappings "nvimtree"
+  --   end,
+  --   opts = function()
+  --     return require "plugins.configs.nvimtree"
+  --   end,
+  --   config = function(_, opts)
+  --     dofile(vim.g.base46_cache .. "nvimtree")
+  --     require("nvim-tree").setup(opts)
+  --   end,
+  -- },
 
   {
     "nvim-telescope/telescope.nvim",
@@ -1023,6 +1038,72 @@ local default_plugins = {
       -- vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
     end,
   },
+
+  {
+    "anuvyklack/hydra.nvim",
+    config = function(_, opts)
+      local Hydra = require "hydra"
+      Hydra {
+        name = "HARPOON",
+        mode = { "n", "x" },
+        body = "<leader>j",
+        config = {
+          color = "blue",
+        },
+        heads = {
+          {
+            "h",
+            function()
+              require("harpoon"):list():select(1)
+            end,
+            {
+              desc = "1",
+              color = "blue",
+            },
+          },
+          {
+            "j",
+            function()
+              require("harpoon"):list():select(2)
+            end,
+            {
+              desc = "2",
+              color = "blue",
+            },
+          },
+          {
+            "k",
+            function()
+              require("harpoon"):list():select(3)
+            end,
+            {
+              desc = "3",
+              color = "blue",
+            },
+          },
+          {
+            "l",
+            function()
+              require("harpoon"):list():select(4)
+            end,
+            {
+              desc = "4",
+              color = "blue",
+            },
+          },
+        },
+        exit = true,
+      }
+      -- vim.notify(vim.inspect(require("harpoon"):list():get(1)))
+    end,
+    event = "VeryLazy",
+  },
+
+  -- {
+  --   "miversen33/netman.nvim",
+  --   config = true,
+  --   event = "VeryLazy",
+  -- },
 
   {
     "stevearc/oil.nvim",

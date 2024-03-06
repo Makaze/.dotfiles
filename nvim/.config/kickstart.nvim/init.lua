@@ -998,7 +998,7 @@ local function cursor_lock(lock)
     vim.w.cursor_lock = lock
     vim.api.nvim_create_autocmd("CursorMoved", {
       desc = "Cursor lock for window " .. win,
-      buffer = 0,
+      buffer = 0, <ScrollWheelDown>,
       group = augid,
       callback = cb,
     })
@@ -1042,6 +1042,19 @@ autocmd! CursorMoved * call UpdateARegister()
 
 " Update "a" register when text is selected with the mouse
 autocmd! TextYankPost * call UpdateARegister()
+]]
+
+vim.cmd [[
+function ExportHighlights(file)
+    redir > highlights.vim
+    hi
+    redir END
+    e hightlights.vim
+    %s/xxx //
+    %s/\(\S\+) \+links to \+(\S\+\)/link \1 \2/
+    %s/\(\S\+) \+cleared/clear \1/
+    w
+endfunction
 ]]
 
 vim.cmd [[ source ~/.dotfiles/nvim/gruvbox.vim ]]

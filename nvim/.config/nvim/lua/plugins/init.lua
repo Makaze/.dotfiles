@@ -849,7 +849,7 @@ local default_plugins = {
     },
     config = function(_, opts)
       require("notify").setup(opts)
-      vim.notify = require "notify"
+      -- vim.notify = require "notify"
     end,
     event = "VeryLazy",
   },
@@ -1108,13 +1108,14 @@ local default_plugins = {
   {
     "stevearc/oil.nvim",
     opts = {
+      -- default_file_explorer = false,
       view_options = {
         -- Show files and directories that start with "."
         show_hidden = true,
       },
     },
     config = true,
-    event = "VeryLazy",
+    lazy = false,
     -- Optional dependencies
     dependencies = { "nvim-tree/nvim-web-devicons" },
   },

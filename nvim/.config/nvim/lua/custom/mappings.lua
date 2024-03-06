@@ -43,8 +43,8 @@ M.general = {
       opts = { noremap = true },
     },
     -- close buffer + hide terminal buffer
-    ["<leader>xx"] = { ":BufDel<CR>", "Close buffer" },
-    ["<leader>tx"] = { ":BufDel<CR>", "Close buffer" },
+    ["<leader>xx"] = { ":bd<CR>", "Close buffer" },
+    ["<leader>tx"] = { ":bd!<CR>", "Close buffer" },
     ["<leader>tb"] = {
       ":Telescope buffers<CR>",
       "Search buffers",
@@ -112,7 +112,7 @@ M.general = {
   t = {
     -- close buffer + hide terminal buffer
     ["<leader>xx"] = {
-      ":BufDel<CR>",
+      ":bd!<CR>",
       "Close buffer",
     },
   },

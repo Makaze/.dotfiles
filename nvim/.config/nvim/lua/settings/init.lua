@@ -178,3 +178,20 @@ autocmd! CursorMoved * call UpdateARegister()
 " Update "a" register when text is selected with the mouse
 autocmd! TextYankPost * call UpdateARegister()
 ]]
+
+vim.cmd [[
+function ExportHighlights(file)
+  try
+    let output = execute('hi')
+    let lines = split(output, "\n")
+    call writefile(lines, a:file, 'b')
+    call system('sed -i "s/^/hi /g" ' . a:file)
+    call system('sed -i "s/xxx //g" ' . a:file)
+    call system('sed -i "s/\(\S\+\) \+links to \+\(\S\+\)/link \1 \2/g" ' . a:file)
+    call system('sed -i "s/\(\S\+\) \+cleared/clear \1/g" ' . a:file)
+    echo "Highlights exported to " . a:file
+  catch
+    echo "Error exporting highlights: " . v:exception
+  endtry
+endfunction
+]]

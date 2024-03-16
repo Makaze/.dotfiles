@@ -1,29 +1,29 @@
-local overrides = require("custom.configs.overrides")
+local overrides = require "custom.configs.overrides"
 
 ---@type NvPluginSpec[]
 local plugins = {
 
   -- builtin nvim plugins are disabled
-   builtins = {
-      "2html_plugin",
-      "getscript",
-      "getscriptPlugin",
-      "gzip",
-      "logipat",
-      -- "netrw",
-      -- "netrwPlugin",
-      -- "netrwSettings",
-      -- "netrwFileHandlers",
-      "matchit",
-      "tar",
-      "tarPlugin",
-      "rrhelper",
-      "spellfile_plugin",
-      "vimball",
-      "vimballPlugin",
-      "zip",
-      "zipPlugin",
-   },
+  builtins = {
+    "2html_plugin",
+    "getscript",
+    "getscriptPlugin",
+    "gzip",
+    "logipat",
+    -- "netrw",
+    -- "netrwPlugin",
+    -- "netrwSettings",
+    -- "netrwFileHandlers",
+    "matchit",
+    "tar",
+    "tarPlugin",
+    "rrhelper",
+    "spellfile_plugin",
+    "vimball",
+    "vimballPlugin",
+    "zip",
+    "zipPlugin",
+  },
 
   -- Override plugin definition options
 
@@ -61,13 +61,13 @@ local plugins = {
   },
 
   -- Install a plugin
-  {
-    "max397574/better-escape.nvim",
-    event = "InsertEnter",
-    config = function()
-      require("better_escape").setup()
-    end,
-  },
+  -- {
+  --   "max397574/better-escape.nvim",
+  --   event = "InsertEnter",
+  --   config = function()
+  --     require("better_escape").setup()
+  --   end,
+  -- },
 
   -- Install sidebar
   --  {
@@ -88,14 +88,14 @@ local plugins = {
   --    lazy = false,
   --  },
 
-    -- {
-    --   "freddiehaddad/feline.nvim",
-    --   config = function()
-    --     require("plugins.feline") -- the location of this GIST.
-    --   end,
-    -- }
+  -- {
+  --   "freddiehaddad/feline.nvim",
+  --   config = function()
+  --     require("plugins.feline") -- the location of this GIST.
+  --   end,
+  -- }
 
-   -- To make a plugin not be loaded
+  -- To make a plugin not be loaded
   -- {
   --   "NvChad/nvim-colorizer.lua",
   --   enabled = false

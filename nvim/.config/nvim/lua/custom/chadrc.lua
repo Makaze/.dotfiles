@@ -14,20 +14,25 @@ M.ui = {
     -- theme = "vscode_colored",
   },
 
+  telescope = {
+    style = "bordered",
+  },
+
   lsp_semantic_tokens = true,
 
   hl_override = highlights.override,
   hl_add = highlights.add,
 
   tabufline = {
-    enabled = (function()
-      if vim.g.vscode then
-        return false
-      else
-        return true
-        -- return false
-      end
-    end)(),
+    -- enabled = (function()
+    --   if vim.g.vscode then
+    --     return false
+    --   else
+    --     return true
+    --     -- return false
+    --   end
+    -- end)(),
+    enabled = false,
   },
   -- transparency = true,
 
@@ -55,6 +60,13 @@ M.ui = {
       { "  Themes", "Spc t h", "Telescope themes" },
       { "  Mappings", "Spc c h", "NvCheatsheet" },
     },
+  },
+
+  extended_integrations = {
+    "navic",
+    "dap",
+    "hop",
+    "trouble",
   },
 }
 

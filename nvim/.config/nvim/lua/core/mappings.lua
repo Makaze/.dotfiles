@@ -30,8 +30,8 @@ M.general = {
     -- ["<C-c>"] = { "<cmd> %y+ <CR>", "Copy whole file" },
 
     -- line numbers
-    ["<leader>n"] = { "<cmd> set nu! <CR>", "Toggle line number" },
-    ["<leader>rn"] = { "<cmd> set rnu! <CR>", "Toggle relative number" },
+    -- ["<leader>n"] = { "<cmd> set nu! <CR>", "Toggle line number" },
+    -- ["<leader>rn"] = { "<cmd> set rnu! <CR>", "Toggle relative number" },
 
     -- Allow moving the cursor through wrapped lines with j, k, <Up> and <Down>
     -- http://www.reddit.com/r/vim/comments/2k4cbr/problem_with_gj_and_gk/
@@ -43,7 +43,7 @@ M.general = {
     ["<Down>"] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', "Move down", opts = { expr = true } },
 
     -- new buffer
-    ["<leader>b"] = { "<cmd> enew <CR>", "New buffer" },
+    -- ["<leader>b"] = { "<cmd> enew <CR>", "New buffer" },
     ["<leader>ch"] = { "<cmd> NvCheatsheet <CR>", "Mapping cheatsheet" },
     ["<leader>sb"] = { "<cmd> Telescope buffers <CR>", "Fuzzy find buffers" },
 

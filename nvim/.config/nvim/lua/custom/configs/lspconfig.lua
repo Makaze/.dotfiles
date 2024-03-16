@@ -13,6 +13,7 @@ local servers = {
   "pyright",
   -- "deno",
   "tsserver",
+  "intelephense",
 }
 
 for _, lsp in ipairs(servers) do

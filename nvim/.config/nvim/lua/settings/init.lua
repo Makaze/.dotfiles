@@ -36,11 +36,10 @@ set.foldmethod = "expr"
 set.foldexpr = "nvim_treesitter#foldexpr()"
 vim.o.fillchars = [[eob:~,fold:+,foldopen:,foldsep:|,foldclose:]]
 -- set.listchars = "space:·,tab:->\\"
-set.listchars = { tab = "│ ", leadmultispace = "│···", trail = "-", space = "·" }
+set.listchars = { tab = "│->", leadmultispace = "│···", trail = "-", space = "·" }
 set.list = true
 -- vim.o.colorcolumn = "81,121"
 set.conceallevel = 1
-
 -- Global winbar
 set.winbar = "%m %f"
 vim.cmd [[ hi WinBar guibg=#22222200 ]]
@@ -75,7 +74,36 @@ vim.cmd [[
   xnoremap c       "_c
   nnoremap s       "_s
   xnoremap s       "_s
-  nnoremap x       "_x
+
+  nnoremap diw     "_diw
+  xnoremap diw     "_diw
+  nnoremap ciw     "_ciw
+  xnoremap ciw     "_ciw
+  nnoremap siw     "_siw
+  xnoremap siw     "_siw
+  
+  nnoremap daw     "_daw
+  xnoremap daw     "_daw
+  nnoremap caw     "_caw
+  xnoremap caw     "_caw
+  nnoremap saw     "_saw
+  xnoremap saw     "_saw
+
+  nnoremap dip     "_dip
+  xnoremap dip     "_dip
+  nnoremap cip     "_cip
+  xnoremap cip     "_cip
+  nnoremap sip     "_sip
+  xnoremap sip     "_sip
+  
+  nnoremap dap     "_dap
+  xnoremap dap     "_dap
+  nnoremap cap     "_cap
+  xnoremap cap     "_cap
+  nnoremap sap     "_sap
+  xnoremap sap     "_sap
+
+  nnoremap x       <NOP>
 
   " Visual paste always before selections
   xnoremap p       P
@@ -165,21 +193,6 @@ vim.cmd [[
 -- end)
 
 vim.cmd [[
-" Automatically update the "a" register with the current selection
-function! UpdateARegister()
-    if mode() ==# 'v' || mode() ==# 'V' || mode() ==# "\<C-V>"
-        let @a = @"
-    endif
-endfunction
-
-" Update "a" register when entering visual mode
-autocmd! CursorMoved * call UpdateARegister()
-
-" Update "a" register when text is selected with the mouse
-autocmd! TextYankPost * call UpdateARegister()
-]]
-
-vim.cmd [[
 function ExportHighlights(file)
   try
     let output = execute('hi')
@@ -195,3 +208,41 @@ function ExportHighlights(file)
   endtry
 endfunction
 ]]
+
+-- Close meaningless buffers
+vim.api.nvim_create_autocmd({ "VimEnter" }, {
+  callback = function()
+    local buffers = vim.api.nvim_list_bufs()
+
+    for _, buf in ipairs(buffers) do
+      local buf_type = vim.api.nvim_buf_get_option(buf, "buftype")
+      local buf_name = vim.api.nvim_buf_get_name(buf)
+
+      if buf_name == "" or string.find(buf_name, "NvimTree") or buf_type == "nofile" then
+        vim.api.nvim_buf_delete(buf, { force = true })
+      end
+
+      -- print(string.format("%-15s|  %s", buf_type, buf_name))
+    end
+  end,
+})
+
+function list_buffers()
+  local buffers = vim.api.nvim_list_bufs()
+
+  print "Buffer Type    |  Buffer Name"
+  print "----------------------------------"
+  for _, buf in ipairs(buffers) do
+    local buf_type = vim.api.nvim_buf_get_option(buf, "buftype")
+    local buf_name = vim.api.nvim_buf_get_name(buf)
+
+    -- Check if the buffer has a name, if not, assign "[No Name]" as its name
+    if buf_name == "" then
+      buf_name = "[No Name]"
+    end
+
+    print(string.format("%-15s|  %s", buf_type, buf_name))
+  end
+end
+
+-- list_buffers()

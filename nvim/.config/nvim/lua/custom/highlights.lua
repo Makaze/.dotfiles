@@ -8,7 +8,7 @@ local M = {}
 M.override = {
   Comment = {
     italic = true,
-    fg = { "grey_fg2", 7 },
+    fg = { "yellow", 0 },
     bg = { "one_bg2", -6 },
   },
   -- NonText = {
@@ -31,7 +31,9 @@ M.override = {
   IndentBlanklineChar = { fg = "one_bg3" },
   -- IndentBlanklineContextSpaceChar = { fg = "teal" },
 
-  -- ["@variable"] = { link = "@constant" },
+  ["@variable"] = { link = "@constant" },
+  ["@variable.member"] = { link = "@constant" },
+  ["@comment"] = { link = "Comment" },
 }
 
 ---@type HLTable

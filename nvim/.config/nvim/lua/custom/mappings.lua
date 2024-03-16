@@ -26,7 +26,6 @@ M.general = {
     ["<leader>trq"] = { ":TroubleToggle quickfix<CR>", "Toggle Trouble quickfix", opts = { nowait = true } },
     ["<leader>trl"] = { ":TroubleToggle loclist<CR>", "Toggle Trouble loclist", opts = { nowait = true } },
     ["gR"] = { ":TroubleToggle lsp_references<CR>", "Toggle Trouble lsp_references", opts = { nowait = true } },
-    ["<leader>ss"] = { "<cmd>SymbolsOutline<cr>", desc = "Toggle Symbols outline" },
     ["<leader>u"] = { "<cmd>Telescope undo<cr>", desc = "Telescope undo" },
     ["s"] = {
       function()

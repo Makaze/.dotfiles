@@ -101,6 +101,7 @@ local default_plugins = {
       dofile(vim.g.base46_cache .. "syntax")
       require("nvim-treesitter.configs").setup(opts)
       vim.api.nvim_set_hl(0, "@variable.member", { link = "@constant" })
+      vim.api.nvim_set_hl(0, "@comment", { link = "Comment" })
     end,
   },
 
@@ -130,7 +131,10 @@ local default_plugins = {
 
   {
     "smoka7/hop.nvim",
-    config = true,
+    config = function(_, opts)
+      dofile(vim.g.base46_cache .. "hop") -- add this line before calling hop setup
+      require("hop").setup(opts)
+    end,
     event = "VeryLazy",
     keys = {
       {
@@ -160,14 +164,14 @@ local default_plugins = {
     },
   },
 
-  {
-    "rmagatti/goto-preview",
-    config = true,
-    opts = {
-      default_mappings = true,
-    },
-    event = "VeryLazy",
-  },
+  -- {
+  --   "rmagatti/goto-preview",
+  --   config = true,
+  --   opts = {
+  --     default_mappings = true,
+  --   },
+  --   event = "VeryLazy",
+  -- },
 
   -- VSCode theme
   -- {
@@ -210,11 +214,44 @@ local default_plugins = {
   --   event = "VeryLazy",
   -- },
 
-  -- {
-  --     'SmiteshP/nvim-navic',
-  --     config = true,
-  --     event = "VeryLazy",
-  -- },
+  {
+    "SmiteshP/nvim-navic",
+    config = function(_, opts)
+      dofile(vim.g.base46_cache .. "navic") -- add this line before calling navic setup
+      require("nvim-navic").setup(opts)
+      vim.cmd [[
+        hi NavicIconsFile guibg=NONE
+        hi NavicIconsModule guibg=NONE
+        hi NavicIconsNamespace guibg=NONE
+        hi NavicIconsPackage guibg=NONE
+        hi NavicIconsClass guibg=NONE
+        hi NavicIconsMethod guibg=NONE
+        hi NavicIconsProperty guibg=NONE
+        hi NavicIconsField guibg=NONE
+        hi NavicIconsConstructor guibg=NONE
+        hi NavicIconsEnum guibg=NONE
+        hi NavicIconsInterface guibg=NONE
+        hi NavicIconsFunction guibg=NONE
+        hi NavicIconsVariable guibg=NONE
+        hi NavicIconsConstant guibg=NONE
+        hi NavicIconsString guibg=NONE
+        hi NavicIconsNumber guibg=NONE
+        hi NavicIconsBoolean guibg=NONE
+        hi NavicIconsArray guibg=NONE
+        hi NavicIconsObject guibg=NONE
+        hi NavicIconsKey guibg=NONE
+        hi NavicIconsNull guibg=NONE
+        hi NavicIconsEnumMember guibg=NONE
+        hi NavicIconsStruct guibg=NONE
+        hi NavicIconsEvent guibg=NONE
+        hi NavicIconsOperator guibg=NONE
+        hi NavicIconsTypeParameter guibg=NONE
+        hi NavicText guibg=NONE
+        hi NavicSeparator guibg=NONE
+      ]]
+    end,
+    event = "VeryLazy",
+  },
 
   -- git stuff
   {
@@ -303,6 +340,52 @@ local default_plugins = {
     end,
     event = "VeryLazy",
   },
+
+  -- {
+  --   "b0o/incline.nvim",
+  --   dependencies = {
+  --     "SmiteshP/nvim-navic",
+  --     "nvim-tree/nvim-web-devicons", -- optional dependency
+  --   },
+  --   config = function()
+  --     local helpers = require "incline.helpers"
+  --     local navic = require "nvim-navic"
+  --     local devicons = require "nvim-web-devicons"
+  --     require("incline").setup {
+  --       window = {
+  --         padding = 0,
+  --         margin = { horizontal = 0, vertical = 0 },
+  --       },
+  --       render = function(props)
+  --         local filename = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(props.buf), ":t")
+  --         if filename == "" then
+  --           filename = "[No Name]"
+  --         end
+  --         local ft_icon, ft_color = devicons.get_icon_color(filename)
+  --         local modified = vim.bo[props.buf].modified
+  --         local res = {
+  --           ft_icon and { " ", ft_icon, " ", guibg = ft_color, guifg = helpers.contrast_color(ft_color) } or "",
+  --           " ",
+  --           { filename, gui = modified and "bold,italic" or "bold" },
+  --           guibg = "#333333",
+  --         }
+  --         if props.focused then
+  --           for _, item in ipairs(navic.get_data(props.buf) or {}) do
+  --             table.insert(res, {
+  --               { "  ", group = "NavicSeparator" },
+  --               { item.icon, group = "NavicIcons" .. item.type },
+  --               { item.name, group = "NavicText" },
+  --             })
+  --           end
+  --         end
+  --         table.insert(res, " ")
+  --         return res
+  --       end,
+  --     }
+  --   end,
+  --   -- Optional: Lazy load Incline
+  --   event = "VeryLazy",
+  -- },
 
   {
     "stevearc/conform.nvim",
@@ -407,18 +490,6 @@ local default_plugins = {
     end,
   },
 
-  -- {
-  --   "nvimdev/lspsaga.nvim",
-  --   config = function()
-  --     require("lspsaga").setup {}
-  --   end,
-  --   dependencies = {
-  --     "nvim-treesitter/nvim-treesitter", -- optional
-  --     "nvim-tree/nvim-web-devicons", -- optional
-  --   },
-  --   event = "VeryLazy",
-  -- },
-
   {
     "numToStr/Comment.nvim",
     keys = {
@@ -445,6 +516,10 @@ local default_plugins = {
       -- or leave it empty to use the default settings
       -- refer to the configuration section below
     },
+    config = function(_, opts)
+      dofile(vim.g.base46_cache .. "trouble") -- add this line before calling trouble setup
+      require("trouble").setup(opts)
+    end,
     event = "VeryLazy",
   },
 
@@ -466,8 +541,19 @@ local default_plugins = {
       width = 130,
       autocmds = {
         -- enableOnVimEnter = true,
+        -- disableOnVimLeave = true,
+      },
+      mappings = {
+        enabled = true,
+      },
+      buffers = {
+        -- setNames = true,
       },
     },
+    config = function(_, opts)
+      require("no-neck-pain").setup(opts)
+      vim.cmd [[ NoNeckPain ]]
+    end,
   },
 
   -- file managing , picker etc
@@ -512,42 +598,68 @@ local default_plugins = {
     end,
   },
 
-  -- or, to get rolling updates
-  {
-    "mrjones2014/legendary.nvim",
-    -- since legendary.nvim handles all your keymaps/commands,
-    -- its recommended to load legendary.nvim before other plugins
-    priority = 10000,
-    lazy = false,
-    -- sqlite is only needed if you want to use frecency sorting
-    dependencies = { "kkharji/sqlite.lua" },
-    opts = {
-      extensions = {
-        -- to use default settings:
-        -- or, customize the mappings
-        smart_splits = {
-          mods = {
-            -- any of the mods can also be a table of the following form
-            swap = {
-              -- this will create the mapping like
-              -- <leader><C-h>
-              -- <leader><C-j>
-              -- <leader><C-k>
-              -- <leader><C-l>
-              mod = "<C>",
-              prefix = "<leader>",
-            },
-          },
-        },
-      },
-    },
-  },
-
   {
     "mrjones2014/smart-splits.nvim",
-    -- config = true,
-    -- event = "VeryLazy",
+    config = function(_, opts)
+      require("smart-splits").setup(opts)
+      -- recommended mappings
+      -- resizing splits
+      -- these keymaps will also accept a range,
+      -- for example `10<A-h>` will `resize_left` by `(10 * config.default_amount)`
+      vim.keymap.set("n", "<A-h>", require("smart-splits").resize_left, { desc = "Resize window left" })
+      vim.keymap.set("n", "<A-j>", require("smart-splits").resize_down, { desc = "Resize window down" })
+      vim.keymap.set("n", "<A-k>", require("smart-splits").resize_up, { desc = "Resize window up" })
+      vim.keymap.set("n", "<A-l>", require("smart-splits").resize_right, { desc = "Resize window right" })
+      -- moving between splits
+      vim.keymap.set("n", "<C-h>", require("smart-splits").move_cursor_left, { desc = "Move left 1 window" })
+      vim.keymap.set("n", "<C-j>", require("smart-splits").move_cursor_down, { desc = "Move down 1 window" })
+      vim.keymap.set("n", "<C-k>", require("smart-splits").move_cursor_up, { desc = "Move up 1 window" })
+      vim.keymap.set("n", "<C-l>", require("smart-splits").move_cursor_right, { desc = "Move right 1 window" })
+      -- vim.keymap.set('n', '<C-\\>', require('smart-splits').move_cursor_previous)
+      -- swapping buffers between windows
+      vim.keymap.set("n", "<leader><C-h>", require("smart-splits").swap_buf_left, { desc = "Swap window left" })
+      vim.keymap.set("n", "<leader><C-j>", require("smart-splits").swap_buf_down, { desc = "Swap window down" })
+      vim.keymap.set("n", "<leader><C-k>", require("smart-splits").swap_buf_up, { desc = "Swap window up" })
+      vim.keymap.set("n", "<leader><C-l>", require("smart-splits").swap_buf_right, { desc = "Swap window right" })
+    end,
+    lazy = false,
   },
+
+  -- -- or, to get rolling updates
+  -- {
+  --   "mrjones2014/legendary.nvim",
+  --   -- since legendary.nvim handles all your keymaps/commands,
+  --   -- its recommended to load legendary.nvim before other plugins
+  --   priority = 10000,
+  --   lazy = false,
+  --   -- sqlite is only needed if you want to use frecency sorting
+  --   dependencies = { "kkharji/sqlite.lua" },
+  --   opts = {
+  --     extensions = {
+  --       -- to use default settings:
+  --       -- or, customize the mappings
+  --       smart_splits = {
+  --         directions = { "h", "j", "k", "l" },
+  --
+  --         mods = {
+  --           move = {
+  --             mod = "<C>",
+  --           },
+  --           -- any of the mods can also be a table of the following form
+  --           swap = {
+  --             -- this will create the mapping like
+  --             -- <leader><C-h>
+  --             -- <leader><C-j>
+  --             -- <leader><C-k>
+  --             -- <leader><C-l>
+  --             mod = "<C>",
+  --             prefix = "<leader>",
+  --           },
+  --         },
+  --       },
+  --     },
+  --   },
+  -- },
 
   {
     "nvim-telescope/telescope-file-browser.nvim",
@@ -595,8 +707,8 @@ local default_plugins = {
   {
     "rmagatti/auto-session",
     opts = {
-      auto_save_enabled = true,
-      auto_restore_enabled = true,
+      -- auto_save_enabled = true,
+      -- auto_restore_enabled = true,
     },
     config = true,
     lazy = false,
@@ -675,8 +787,13 @@ local default_plugins = {
 
   {
     "tpope/vim-unimpaired",
-    config = false,
+    config = false,  
     lazy = false,
+  },
+  {
+    "tpope/vim-eunuch",
+    config = false,
+    event = false,
   },
   -- {
   --   "tpope/vim-obsession",
@@ -804,24 +921,24 @@ local default_plugins = {
     event = "VeryLazy",
     ---@type Flash.Config
     opts = {},
-        -- stylua: ignore
-        keys = {
-            { "<C-f>", mode = { "n", "x", "o" },
-                function() require("flash").jump() end, desc = "Flash"
-            },
-            { "<leader>sf", mode = { "n", "o", "x" },
-                function() require("flash").treesitter() end, desc = "Flash Treesitter"
-            },
-            { "<leader>rs", mode = "o",
-                function() require("flash").remote() end, desc = "Remote Flash"
-            },
-            { "<leader>ts", mode = { "o", "x" },
-                function() require("flash").treesitter_search() end, desc = "Treesitter Search"
-            },
-            { "<C-s>", mode = { "c" },
-                function() require("flash").toggle() end, desc = "Toggle Flash Search"
-            },
-        },
+    -- stylua: ignore
+    keys = {
+      { "<C-f>", mode = { "n", "x", "o" },
+          function() require("flash").jump() end, desc = "Flash"
+      },
+      { "<leader>sf", mode = { "n", "o", "x" },
+          function() require("flash").treesitter() end, desc = "Flash Treesitter"
+      },
+      { "<leader>rs", mode = "o",
+          function() require("flash").remote() end, desc = "Remote Flash"
+      },
+      -- { "<leader>ts", mode = { "o", "x" },
+      --     function() require("flash").treesitter_search() end, desc = "Treesitter Search"
+      -- },
+      -- { "<C-s>", mode = { "c" },
+      --     function() require("flash").toggle() end, desc = "Toggle Flash Search"
+      -- },
+    },
   },
 
   -- {
@@ -842,17 +959,17 @@ local default_plugins = {
     },
   },
 
-  {
-    "rcarriga/nvim-notify",
-    opts = {
-      background_colour = "#55555500",
-    },
-    config = function(_, opts)
-      require("notify").setup(opts)
-      -- vim.notify = require "notify"
-    end,
-    event = "VeryLazy",
-  },
+  -- {
+  --   "rcarriga/nvim-notify",
+  --   opts = {
+  --     background_colour = "#55555500",
+  --   },
+  --   config = function(_, opts)
+  --     require("notify").setup(opts)
+  --     -- vim.notify = require "notify"
+  --   end,
+  --   event = "VeryLazy",
+  -- },
 
   {
     "j-hui/fidget.nvim",
@@ -883,14 +1000,14 @@ local default_plugins = {
     "mbbill/undotree",
     opts = {},
     config = function(_, opts)
-      vim.keymap.set("n", "<F5>", vim.cmd.UndotreeToggle)
+      vim.keymap.set("n", "<F5>", vim.cmd.UndotreeToggle, { desc = "Undotree" })
     end,
     event = "VeryLazy",
   },
 
   {
-    "sc0/telescope-cmdline.nvim",
-    branch = "command-builder",
+    "jonarrienim/telescope-cmdline.nvim",
+    -- branch = "command-builder",
     config = function(_, opts)
       require("telescope").load_extension "cmdline"
     end,
@@ -919,19 +1036,10 @@ local default_plugins = {
       dofile(vim.g.base46_cache .. "whichkey")
       require("which-key").setup(opts)
     end,
+    event = "VeryLazy",
   },
 
   -- or, to get rolling updates
-  {
-    "mrjones2014/legendary.nvim",
-    -- since legendary.nvim handles all your keymaps/commands,
-    -- its recommended to load legendary.nvim before other plugins
-    priority = 10000,
-    lazy = false,
-    -- sqlite is only needed if you want to use frecency sorting
-    -- dependencies = { 'kkharji/sqlite.lua' }
-  },
-
   -- install with yarn or npm
   {
     "iamcco/markdown-preview.nvim",
@@ -943,11 +1051,11 @@ local default_plugins = {
     ft = { "markdown" },
   },
 
-  {
-    "ellisonleao/glow.nvim",
-    config = true,
-    cmd = "Glow",
-  },
+  -- {
+  --   "ellisonleao/glow.nvim",
+  --   config = true,
+  --   cmd = "Glow",
+  -- },
 
   -- {
   --   "nvim-orgmode/orgmode",
@@ -1123,7 +1231,9 @@ local default_plugins = {
   -- DAP debugging
   {
     "mfussenegger/nvim-dap",
-    config = false,
+    config = function(_, opts)
+      dofile(vim.g.base46_cache .. "dap")
+    end,
     event = "VeryLazy",
   },
   {

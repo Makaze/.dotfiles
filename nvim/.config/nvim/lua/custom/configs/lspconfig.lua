@@ -13,7 +13,19 @@ local servers = {
   "pyright",
   -- "deno",
   "tsserver",
-  "intelephense",
+  -- "intelephense",
+}
+
+lspconfig.intelephense.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    intelephense = {
+      format = {
+        braces = "k&r",
+      },
+    },
+  },
 }
 
 for _, lsp in ipairs(servers) do

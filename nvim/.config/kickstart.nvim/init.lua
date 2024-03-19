@@ -426,8 +426,6 @@ vim.cmd [[
   xnoremap <C-p>   "+p
   nnoremap <C-c>   "+y
   nnoremap <C-p>   "+p
-  inoremap <C-c>   <C-o>"+y
-  inoremap <C-p>   <C-o>"+p
   nnoremap d       "_d
   xnoremap d       "_d
   nnoremap c       "_c

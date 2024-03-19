@@ -52,7 +52,7 @@ vim.cmd [[
   " inoremap <Down>  <NOP>
   " nnoremap <Left>  <NOP>
   " nnoremap <Right> <NOP>
-  ": nnoremap <Up>    <NOP>
+  " nnoremap <Up>    <NOP>
   " nnoremap <Down>  <NOP>
   nnoremap <Left>  :echoe "Use h instead"<CR>
   nnoremap <Right> :echoe "Use l instead"<CR>
@@ -66,8 +66,6 @@ vim.cmd [[
   xnoremap <C-p>   "+p
   nnoremap <C-c>   "+y
   nnoremap <C-p>   "+p
-  inoremap <C-c>   <C-o>"+y
-  inoremap <C-p>   <C-o>"+p
   nnoremap d       "_d
   xnoremap d       "_d
   nnoremap c       "_c

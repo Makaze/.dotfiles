@@ -503,6 +503,8 @@ vim.keymap.set('n', '<leader>zt', cursor_lock 't', { desc = 'Toggle cursor lock 
 vim.keymap.set('n', '<leader>zz', cursor_lock 'z', { desc = 'Toggle cursor lock (middle)' })
 vim.keymap.set('n', '<leader>zb', cursor_lock 'b', { desc = 'Toggle cursor lock (bottom)' })
 
+vim.cmd [[ packadd cfilter ]]
+
 -- [[ Basic Keymaps ]]
 
 -- Keymaps for better default experience

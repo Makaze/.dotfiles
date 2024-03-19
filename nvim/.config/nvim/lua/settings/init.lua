@@ -133,7 +133,7 @@ vim.cmd [[
   nnoremap <C-Up>   <C-a>
   xnoremap <C-Up>   <C-a>
   nnoremap <C-Down> <C-x>
-  xnoremap <C-Down> <C-x>
+  xnoremap <C-Down> <C-x>;
 
   " Highlight long lines
   " match ErrorMsg '\%>80v.\+'

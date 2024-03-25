@@ -8,7 +8,7 @@ local M = {}
 M.override = {
   Comment = {
     italic = true,
-    fg = { "yellow", 0 },
+    fg = { "white", -35 },
     bg = { "one_bg2", -6 },
   },
   -- NonText = {

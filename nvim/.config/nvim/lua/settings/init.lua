@@ -1,5 +1,4 @@
 local set = vim.opt
-
 set.expandtab = true
 set.smarttab = true
 set.shiftwidth = 4
@@ -62,6 +61,11 @@ vim.cmd [[
   " inoremap <Right> <NOP>
   " inoremap <Up>    <NOP>
   " inoremap <Down>  <NOP>
+
+  nnoremap <C-s>   <CMD>w<CR>
+  xnoremap <C-s>   <CMD>w<CR>
+  inoremap <C-s>   <CMD>w<CR>
+
   xnoremap <C-c>   "+y
   xnoremap <C-p>   "+p
   nnoremap <C-c>   "+y
@@ -131,15 +135,21 @@ vim.cmd [[
   nnoremap <C-Up>   <C-a>
   xnoremap <C-Up>   <C-a>
   nnoremap <C-Down> <C-x>
-  xnoremap <C-Down> <C-x>;
+  xnoremap <C-Down> <C-x>
+
+  " " Mapping to move the cursor up by half the window height
+  " nnoremap <silent> <C-u> :execute 'normal!' winheight(0)/2 . 'kzz'<CR>
+  "
+  " " Mapping to move the cursor down by half the window height
+  " nnoremap <silent> <C-d> :execute 'normal!' winheight(0)/2 . 'jzz'<CR>
 
   " Highlight long lines
   " match ErrorMsg '\%>80v.\+'
 ]]
 
 -- Move selection in visual mode
-vim.keymap.set("v", "J", ":m '>+1<CR>gv=gv", { silent = true })
-vim.keymap.set("v", "K", ":m '<-2<CR>gv=gv", { silent = true })
+vim.keymap.set("v", "J", ":m '>+1<CR>gv", { silent = true })
+vim.keymap.set("v", "K", ":m '<-2<CR>gv", { silent = true })
 
 -- Credit to @maaaddi from ThePrimeagen Discord
 local function cursor_lock(lock)
@@ -195,39 +205,99 @@ vim.cmd [[
 vim.cmd [[
 function ExportHighlights(file)
   try
-    let output = execute('hi')
-    let lines = split(output, "\n")
+    let lines = execute('hi')
+    let lines = substitute(lines, '\v(^|\n)+', '\1hi ', 'g')
+    let lines = substitute(lines, 'xxx ', '', 'g')
+    let lines = substitute(lines, '\v(\S+) +links to +(\S+)', 'link \1 \2', 'g')
+    let lines = substitute(lines, '\v(\S+) +cleared', 'clear \1', 'g')
+    let lines = split(lines, "\n")
     call writefile(lines, a:file, 'b')
-    call system('sed -i "s/^/hi /g" ' . a:file)
-    call system('sed -i "s/xxx //g" ' . a:file)
-    call system('sed -i "s/\(\S\+\) \+links to \+\(\S\+\)/link \1 \2/g" ' . a:file)
-    call system('sed -i "s/\(\S\+\) \+cleared/clear \1/g" ' . a:file)
     echo "Highlights exported to " . a:file
   catch
     echo "Error exporting highlights: " . v:exception
   endtry
 endfunction
+
+function! Mode(values)
+  let frequency = {}
+  for value in a:values
+    if !has_key(frequency, value)
+      let frequency[value] = 0
+    endif
+    let frequency[value] += 1
+  endfor
+  let max_frequency = 0
+  let mode_value = 0
+  for value in keys(frequency)
+    if frequency[value] > max_frequency
+      let max_frequency = frequency[value]
+      let mode_value = value
+    endif
+  endfor
+  return mode_value
+endfunction
+
+function! AdjustIndent(mode)
+  let m = a:mode
+
+  " Get the start and end line numbers of the visual selection
+  if m == 'v' || m == 'x'
+    let [lnum1, lnum2] = [line("'<"), line("'>")]
+    " Get the indent depths of each line in the visual selection
+    let indents = map(range(lnum1, lnum2), 'indent(v:val)')
+  else
+    let [lnum1, lnum2] = [line(".") - 1, line(".")]
+  endif
+
+
+  " Calculate the mode indent depth
+  if m == 'v' || m == 'x'
+    let indent_level = Mode(indents)
+  else
+    let indent_level = indent(lnum1)
+  endif
+
+  " Determine the type of indentation (tabs or spaces)
+  let indent_char = &expandtab ? ' ' : '\t'
+  let indent_str = repeat(indent_char, indent_level)
+
+  " Adjust the indent of each line to conform to the mode
+  for line in range(lnum1, lnum2)
+    let current_indent = indent(line)
+    let indent_difference = indent_level - current_indent
+    if indent_difference != 0
+      execute line . 's/^\s*/\=' . '"' . indent_str . '"'
+    endif
+  endfor
+endfunction
+
+xnoremap =i   :'<,'>call AdjustIndent('x')<cr>
+nnoremap =i   :call AdjustIndent('n')<cr>
 ]]
 
 -- Close meaningless buffers
+function ClearBuffers()
+  local buffers = vim.api.nvim_list_bufs()
+
+  for _, buf in ipairs(buffers) do
+    local buf_type = vim.api.nvim_buf_get_option(buf, "buftype")
+    local buf_name = vim.api.nvim_buf_get_name(buf)
+
+    if buf_name == "" or string.find(buf_name, "NvimTree") or buf_type == "nofile" then
+      vim.api.nvim_buf_delete(buf, { force = true })
+    end
+
+    -- print(string.format("%-15s|  %s", buf_type, buf_name))
+  end
+end
 vim.api.nvim_create_autocmd({ "VimEnter" }, {
   callback = function()
-    local buffers = vim.api.nvim_list_bufs()
-
-    for _, buf in ipairs(buffers) do
-      local buf_type = vim.api.nvim_buf_get_option(buf, "buftype")
-      local buf_name = vim.api.nvim_buf_get_name(buf)
-
-      if buf_name == "" or string.find(buf_name, "NvimTree") or buf_type == "nofile" then
-        vim.api.nvim_buf_delete(buf, { force = true })
-      end
-
-      -- print(string.format("%-15s|  %s", buf_type, buf_name))
-    end
+    ClearBuffers()
   end,
 })
 
-function list_buffers()
+-- Print list of buffers
+function ListBuffers()
   local buffers = vim.api.nvim_list_bufs()
 
   print "Buffer Type    |  Buffer Name"
@@ -244,5 +314,3 @@ function list_buffers()
     print(string.format("%-15s|  %s", buf_type, buf_name))
   end
 end
-
--- list_buffers()

@@ -103,15 +103,16 @@ local default_plugins = {
       vim.api.nvim_set_hl(0, "@variable.member", { link = "@constant" })
       vim.api.nvim_set_hl(0, "@comment", { link = "Comment" })
     end,
-  },
-
-  {
-    "nvim-treesitter/nvim-treesitter-textobjects",
-    config = function(_, opts)
-      require("nvim-treesitter.configs").setup(opts)
-    end,
     event = "VeryLazy",
   },
+
+  -- {
+  --   "nvim-treesitter/nvim-treesitter-textobjects",
+  --   config = function(_, opts)
+  --     require("nvim-treesitter.configs").setup(opts)
+  --   end,
+  --   event = "VeryLazy",
+  -- },
 
   {
     "nvim-treesitter/nvim-treesitter-context",
@@ -129,40 +130,40 @@ local default_plugins = {
     event = "VeryLazy",
   },
 
-  {
-    "smoka7/hop.nvim",
-    config = function(_, opts)
-      dofile(vim.g.base46_cache .. "hop") -- add this line before calling hop setup
-      require("hop").setup(opts)
-    end,
-    event = "VeryLazy",
-    keys = {
-      {
-        mode = { "v", "n" },
-        "<Leader>hw",
-        "<cmd>HopWord<cr>",
-        desc = "Hop to a word on the screen",
-      },
-      {
-        mode = { "v", "n" },
-        "<Leader>ha",
-        "<cmd>HopAnywhere<cr>",
-        desc = "Hop anywhere on the screen",
-      },
-      {
-        mode = { "v", "n" },
-        "<Leader>hl",
-        "<cmd>HopLine<cr>",
-        desc = "Hop to a line on the screen",
-      },
-      {
-        mode = { "v", "n" },
-        "<Leader>hp",
-        "<cmd>HopPattern<cr>",
-        desc = "Hop to a pattern on the screen",
-      },
-    },
-  },
+  -- {
+  --   "smoka7/hop.nvim",
+  --   config = function(_, opts)
+  --     dofile(vim.g.base46_cache .. "hop") -- add this line before calling hop setup
+  --     require("hop").setup(opts)
+  --   end,
+  --   event = "VeryLazy",
+  --   keys = {
+  --     {
+  --       mode = { "v", "n" },
+  --       "<Leader>hw",
+  --       "<cmd>HopWord<cr>",
+  --       desc = "Hop to a word on the screen",
+  --     },
+  --     {
+  --       mode = { "v", "n" },
+  --       "<Leader>ha",
+  --       "<cmd>HopAnywhere<cr>",
+  --       desc = "Hop anywhere on the screen",
+  --     },
+  --     {
+  --       mode = { "v", "n" },
+  --       "<Leader>hl",
+  --       "<cmd>HopLine<cr>",
+  --       desc = "Hop to a line on the screen",
+  --     },
+  --     {
+  --       mode = { "v", "n" },
+  --       "<Leader>hp",
+  --       "<cmd>HopPattern<cr>",
+  --       desc = "Hop to a pattern on the screen",
+  --     },
+  --   },
+  -- },
 
   -- {
   --   "rmagatti/goto-preview",
@@ -314,6 +315,7 @@ local default_plugins = {
       config = function()
         require "custom.configs.null-ls"
       end,
+      event = "VeryLazy",
       "SmiteshP/nvim-navbuddy",
       dependencies = {
         "SmiteshP/nvim-navic",
@@ -399,7 +401,7 @@ local default_plugins = {
         javascript = { "deno" },
         markdown = { "dprint" },
         html = { "djlint" },
-        -- css = { { "prettierd", "prettier" } },
+        css = { { "prettierd", "prettier" } },
       },
       format_on_save = function(bufnr)
         local ignore_filetypes = { "markdown", "md" }
@@ -480,13 +482,29 @@ local default_plugins = {
         "hrsh7th/cmp-nvim-lsp",
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-path",
+        "hrsh7th/cmp-cmdline",
       },
     },
     opts = function()
       return require "plugins.configs.cmp"
     end,
     config = function(_, opts)
+      local cmp = require "cmp"
       require("cmp").setup(opts)
+      -- `:` cmdline setup.
+      require("cmp").setup.cmdline(":", {
+        mapping = cmp.mapping.preset.cmdline(),
+        sources = cmp.config.sources({
+          { name = "path" },
+        }, {
+          {
+            name = "cmdline",
+            option = {
+              ignore_cmds = { "Man", "!" },
+            },
+          },
+        }),
+      })
     end,
   },
 
@@ -520,7 +538,8 @@ local default_plugins = {
       dofile(vim.g.base46_cache .. "trouble") -- add this line before calling trouble setup
       require("trouble").setup(opts)
     end,
-    event = "VeryLazy",
+    -- event = "VeryLazy",
+    cmd = "Trouble",
   },
 
   {
@@ -579,7 +598,7 @@ local default_plugins = {
       "nvim-treesitter/nvim-treesitter",
       "nvim-lua/plenary.nvim",
     },
-    cmd = "Telescope",
+    -- cmd = "Telescope",
     init = function()
       require("core.utils").load_mappings "telescope"
     end,
@@ -596,6 +615,7 @@ local default_plugins = {
         telescope.load_extension(ext)
       end
     end,
+    event = "VeryLazy",
   },
 
   {
@@ -661,15 +681,15 @@ local default_plugins = {
   --   },
   -- },
 
-  {
-    "nvim-telescope/telescope-file-browser.nvim",
-    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
-    event = "VeryLazy",
-    config = function(_, opts)
-      require("telescope").load_extension "file_browser"
-      vim.keymap.set("n", "<leader>fb", "<cmd>Telescope file_browser<cr>")
-    end,
-  },
+  -- {
+  --   "nvim-telescope/telescope-file-browser.nvim",
+  --   dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+  --   event = "VeryLazy",
+  --   config = function(_, opts)
+  --     require("telescope").load_extension "file_browser"
+  --     vim.keymap.set("n", "<leader>fb", "<cmd>Telescope file_browser<cr>")
+  --   end,
+  -- },
 
   {
     "jvgrootveld/telescope-zoxide",
@@ -681,38 +701,42 @@ local default_plugins = {
     end,
   },
 
-  {
-    "AckslD/nvim-neoclip.lua",
-    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
-    event = "VeryLazy",
-    config = function(_, opts)
-      require("neoclip").setup {
-        default_register = "+",
-        on_select = {
-          set_reg = true,
-          move_to_front = true,
-          close_telescope = true,
-        },
-        on_paste = {
-          set_reg = true,
-          move_to_front = true,
-          close_telescope = true,
-        },
-      }
-      require("telescope").load_extension "neoclip"
-      vim.keymap.set("n", "<leader>fc", "<cmd>Telescope neoclip<cr>")
-    end,
-  },
+  -- {
+  --   "AckslD/nvim-neoclip.lua",
+  --   dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+  --   event = "VeryLazy",
+  --   config = function(_, opts)
+  --     require("neoclip").setup {
+  --       default_register = "+",
+  --       on_select = {
+  --         set_reg = true,
+  --         move_to_front = true,
+  --         close_telescope = true,
+  --       },
+  --       on_paste = {
+  --         set_reg = true,
+  --         move_to_front = true,
+  --         close_telescope = true,
+  --       },
+  --     }
+  --     require("telescope").load_extension "neoclip"
+  --     vim.keymap.set("n", "<leader>fc", "<cmd>Telescope neoclip<cr>")
+  --   end,
+  -- },
 
   {
+
     "rmagatti/auto-session",
     opts = {
-      -- auto_save_enabled = true,
-      -- auto_restore_enabled = true,
+      auto_save_enabled = true,
+      auto_restore_enabled = false,
     },
     config = true,
-    lazy = false,
-    -- event = "VeryLazy",
+    lazy = true,
+    event = "VeryLazy",
+    keys = {
+      { "<leader>rs", "<cmd>SessionRestore<cr><cmd>lua ClearBuffers()<cr>", desc = "Restore session" },
+    },
   },
 
   -- {
@@ -787,7 +811,7 @@ local default_plugins = {
 
   {
     "tpope/vim-unimpaired",
-    config = false,  
+    config = false,
     lazy = false,
   },
   {
@@ -916,30 +940,30 @@ local default_plugins = {
     lazy = false,
   },
 
-  {
-    "folke/flash.nvim",
-    event = "VeryLazy",
-    ---@type Flash.Config
-    opts = {},
-    -- stylua: ignore
-    keys = {
-      { "<C-f>", mode = { "n", "x", "o" },
-          function() require("flash").jump() end, desc = "Flash"
-      },
-      { "<leader>sf", mode = { "n", "o", "x" },
-          function() require("flash").treesitter() end, desc = "Flash Treesitter"
-      },
-      { "<leader>rs", mode = "o",
-          function() require("flash").remote() end, desc = "Remote Flash"
-      },
-      -- { "<leader>ts", mode = { "o", "x" },
-      --     function() require("flash").treesitter_search() end, desc = "Treesitter Search"
-      -- },
-      -- { "<C-s>", mode = { "c" },
-      --     function() require("flash").toggle() end, desc = "Toggle Flash Search"
-      -- },
-    },
-  },
+  -- {
+  --   "folke/flash.nvim",
+  --   event = "VeryLazy",
+  --   ---@type Flash.Config
+  --   opts = {},
+  --   -- stylua: ignore
+  --   keys = {
+  --     { "<C-f>", mode = { "n", "x", "o" },
+  --         function() require("flash").jump() end, desc = "Flash"
+  --     },
+  --     { "<leader>sf", mode = { "n", "o", "x" },
+  --         function() require("flash").treesitter() end, desc = "Flash Treesitter"
+  --     },
+  --     { "<leader>rs", mode = "o",
+  --         function() require("flash").remote() end, desc = "Remote Flash"
+  --     },
+  --     -- { "<leader>ts", mode = { "o", "x" },
+  --     --     function() require("flash").treesitter_search() end, desc = "Treesitter Search"
+  --     -- },
+  --     -- { "<C-s>", mode = { "c" },
+  --     --     function() require("flash").toggle() end, desc = "Toggle Flash Search"
+  --     -- },
+  --   },
+  -- },
 
   -- {
   --   "simrat39/symbols-outline.nvim",
@@ -1021,6 +1045,7 @@ local default_plugins = {
 
   {
     "folke/todo-comments.nvim",
+    config = true,
     dependencies = { "nvim-lua/plenary.nvim" },
     event = "VeryLazy",
   },
@@ -1049,6 +1074,7 @@ local default_plugins = {
       vim.g.mkdp_filetypes = { "markdown" }
     end,
     ft = { "markdown" },
+    event = "VeryLazy",
   },
 
   -- {
@@ -1151,60 +1177,147 @@ local default_plugins = {
     "anuvyklack/hydra.nvim",
     config = function(_, opts)
       local Hydra = require "hydra"
-      Hydra {
+      local harpoon = require "harpoon"
+      local harpoon_hydra = Hydra {
         name = "HARPOON",
         mode = { "n", "x" },
         body = "<leader>j",
         config = {
           color = "blue",
+          invoke_on_body = true,
+          hint = {
+            position = "bottom",
+            border = "rounded",
+            -- type = "window",
+          },
         },
         heads = {
           {
             "h",
             function()
-              require("harpoon"):list():select(1)
+              harpoon:list():select(1)
             end,
             {
-              desc = "1",
+              desc = (function()
+                local val = harpoon:list():get(1) or ""
+                if val then
+                  val = val.value
+                end
+                return val or "1"
+              end)(),
               color = "blue",
             },
           },
           {
             "j",
             function()
-              require("harpoon"):list():select(2)
+              harpoon:list():select(2)
             end,
             {
-              desc = "2",
+              desc = (function()
+                local val = harpoon:list():get(2) or ""
+                if val then
+                  val = val.value
+                end
+                return val or "2"
+              end)(),
               color = "blue",
             },
           },
           {
             "k",
             function()
-              require("harpoon"):list():select(3)
+              harpoon:list():select(3)
             end,
             {
-              desc = "3",
+              desc = (function()
+                local val = harpoon:list():get(3) or ""
+                if val then
+                  val = val.value
+                end
+                return val or "3"
+              end)(),
               color = "blue",
             },
           },
           {
             "l",
             function()
-              require("harpoon"):list():select(4)
+              harpoon:list():select(4)
             end,
             {
-              desc = "4",
+              desc = (function()
+                local val = harpoon:list():get(4) or ""
+                if val then
+                  val = val.value
+                end
+                return val or "4"
+              end)(),
               color = "blue",
             },
           },
         },
         exit = true,
       }
-      -- vim.notify(vim.inspect(require("harpoon"):list():get(1)))
+
+      --       local dap = require "dap"
+      --
+      --       local dap_hint = [[
+      --  ^ ^                          DAP
+      --  _n_: Step over   _s_: Continue/Start   _b_: Breakpoint     _K_: Eval
+      --  _i_: Step into   _x_: Quit             ^ ^                 ^ ^
+      --  _o_: Step out    _X_: Stop             ^ ^
+      --  _c_: To cursor   _C_: Toggle UI
+      --  ^
+      --  ^ ^              _q_: exit
+      -- ]]
+      --
+      --       local dap_hydra = Hydra {
+      --         hint = dap_hint,
+      --         config = {
+      --           color = "pink",
+      --           invoke_on_body = true,
+      --           hint = {
+      --             float_opts = {
+      --               border = "rounded",
+      --             },
+      --           },
+      --         },
+      --         name = "DAP",
+      --         mode = { "n" },
+      --         body = "<leader>hd",
+      --         heads = {
+      --           { "n", dap.step_over, { silent = true } },
+      --           { "i", dap.step_into, { silent = true } },
+      --           { "o", dap.step_out, { silent = true } },
+      --           { "c", dap.run_to_cursor, { silent = true } },
+      --           { "s", dap.continue, { silent = true } },
+      --           { "x", ":lua require'dap'.disconnect({ terminateDebuggee = false })<CR>", { exit = true, silent = true } },
+      --           { "X", dap.close, { silent = true } },
+      --           { "C", ":lua require('dapui').toggle()<cr>:DapVirtualTextForceRefresh<CR>", { silent = true } },
+      --           { "b", dap.toggle_breakpoint, { silent = true } },
+      --           { "K", ":lua require('dap.ui.widgets').hover()<CR>", { silent = true } },
+      --           { "q", nil, { exit = true, nowait = true } },
+      --         },
+      --       }
     end,
     event = "VeryLazy",
+  },
+
+  {
+    "Rawnly/gist.nvim",
+    cmd = { "GistCreate", "GistCreateFromFile", "GistsList" },
+    config = true,
+  },
+  -- `GistsList` opens the selected gist in a terminal buffer,
+  -- nvim-unception uses neovim remote rpc functionality to open the gist in an actual buffer
+  -- and prevents neovim buffer inception
+  {
+    "samjwill/nvim-unception",
+    lazy = false,
+    init = function()
+      vim.g.unception_block_while_host_edits = true
+    end,
   },
 
   -- {
@@ -1226,6 +1339,14 @@ local default_plugins = {
     lazy = false,
     -- Optional dependencies
     dependencies = { "nvim-tree/nvim-web-devicons" },
+    keys = {
+      {
+        mode = { "v", "n" },
+        "<Leader>-",
+        "<cmd>Oil<cr>",
+        desc = "Open Oil",
+      },
+    },
   },
 
   -- DAP debugging
@@ -1234,18 +1355,17 @@ local default_plugins = {
     config = function(_, opts)
       dofile(vim.g.base46_cache .. "dap")
     end,
-    event = "VeryLazy",
   },
   {
     "rcarriga/nvim-dap-ui",
     config = true,
-    event = "VeryLazy",
+    cmd = "Dap",
     dependencies = { "mfussenegger/nvim-dap" },
   },
   {
     "theHamsta/nvim-dap-virtual-text",
     config = true,
-    event = "VeryLazy",
+    cmd = "Dap",
     dependencies = { "mfussenegger/nvim-dap", "rcarriga/nvim-dap-ui" },
   },
   -- python debug
@@ -1255,7 +1375,7 @@ local default_plugins = {
     config = function(_, opts)
       require("dap-python").setup "~/.virtualenvs/debugpy/bin/python"
     end,
-    event = "VeryLazy",
+    cmd = "Dap",
     dependencies = { "mfussenegger/nvim-dap", "rcarriga/nvim-dap-ui" },
   },
 
@@ -1263,7 +1383,7 @@ local default_plugins = {
   {
     "leoluz/nvim-dap-go",
     config = true,
-    event = "VeryLazy",
+    cmd = "Dap",
     dependencies = { "mfussenegger/nvim-dap", "rcarriga/nvim-dap-ui" },
   },
 
@@ -1290,7 +1410,7 @@ local default_plugins = {
         .. vim.fn.expand "~"
         .. "/vaults/**.md",
       "BufNewFile " .. vim.fn.expand "~" .. "/vaults/**.md",
-      "VeryLazy",
+      -- "VeryLazy",
     },
     dependencies = {
       -- Required.

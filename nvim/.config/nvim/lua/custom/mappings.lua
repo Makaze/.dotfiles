@@ -11,36 +11,43 @@ M.general = {
       opts = { nowait = true },
     },
     [";"] = { ":", "enter command mode", opts = { nowait = true } },
-    ["<leader>gi"] = { ":GuessIndent<CR>", "Guess settings buffer", opts = { nowait = true } },
-    ["<leader>trx"] = { ":TroubleToggle <CR>", "Toggle Trouble ", opts = { nowait = true } },
-    ["<leader>trw"] = {
-      ":TroubleToggle workspace_diagnostics<CR>",
-      "Toggle Trouble workspace_diagnostics",
+    -- ["<leader>gi"] = { ":GuessIndent<CR>", "Guess settings buffer", opts = { nowait = true } },
+    -- ["<leader>trx"] = { ":TroubleToggle <CR>", "Toggle Trouble ", opts = { nowait = true } },
+    -- ["<leader>trw"] = {
+    --   ":TroubleToggle workspace_diagnostics<CR>",
+    --   "Toggle Trouble workspace_diagnostics",
+    --   opts = { nowait = true },
+    -- },
+    -- ["<leader>trd"] = {
+    --   ":TroubleToggle document_diagnostics<CR>",
+    --   "Toggle Trouble document_diagnostics",
+    --   opts = { nowait = true },
+    -- },
+    -- ["<leader>trq"] = { ":TroubleToggle quickfix<CR>", "Toggle Trouble quickfix", opts = { nowait = true } },
+    -- ["<leader>trl"] = { ":TroubleToggle loclist<CR>", "Toggle Trouble loclist", opts = { nowait = true } },
+    -- ["gR"] = { ":TroubleToggle lsp_references<CR>", "Toggle Trouble lsp_references", opts = { nowait = true } },
+    ["gf"] = {
+      function()
+        vim.diagnostic.open_float()
+      end,
+      "Show diagnostics",
       opts = { nowait = true },
     },
-    ["<leader>trd"] = {
-      ":TroubleToggle document_diagnostics<CR>",
-      "Toggle Trouble document_diagnostics",
-      opts = { nowait = true },
-    },
-    ["<leader>trq"] = { ":TroubleToggle quickfix<CR>", "Toggle Trouble quickfix", opts = { nowait = true } },
-    ["<leader>trl"] = { ":TroubleToggle loclist<CR>", "Toggle Trouble loclist", opts = { nowait = true } },
-    ["gR"] = { ":TroubleToggle lsp_references<CR>", "Toggle Trouble lsp_references", opts = { nowait = true } },
     ["<leader>u"] = { "<cmd>Telescope undo<cr>", desc = "Telescope undo" },
-    ["s"] = {
-      function()
-        require("flash").jump()
-      end,
-      desc = "Flash",
-      opts = { noremap = true },
-    },
-    ["S"] = {
-      function()
-        require("flash").treesitter()
-      end,
-      desc = "Flash Treesitter",
-      opts = { noremap = true },
-    },
+    -- ["s"] = {
+    --   function()
+    --     require("flash").jump()
+    --   end,
+    --   desc = "Flash",
+    --   opts = { noremap = true },
+    -- },
+    -- ["S"] = {
+    --   function()
+    --     require("flash").treesitter()
+    --   end,
+    --   desc = "Flash Treesitter",
+    --   opts = { noremap = true },
+    -- },
     -- close buffer + hide terminal buffer
     ["<leader>xx"] = { ":bd<CR>", "Close buffer" },
     ["<leader>tx"] = { ":bd!<CR>", "Close buffer" },

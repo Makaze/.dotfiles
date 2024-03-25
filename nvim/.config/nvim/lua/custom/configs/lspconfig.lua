@@ -14,6 +14,7 @@ local servers = {
   -- "deno",
   "tsserver",
   -- "intelephense",
+  "vimls",
 }
 
 lspconfig.intelephense.setup {

@@ -199,7 +199,7 @@ M.lspconfig = {
       "LSP references",
     },
 
-    ["<leader>f"] = {
+    ["<leader>gf"] = {
       function()
         vim.diagnostic.open_float { border = "rounded" }
       end,

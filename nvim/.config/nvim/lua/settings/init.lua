@@ -145,6 +145,9 @@ vim.cmd [[
 
   " Highlight long lines
   " match ErrorMsg '\%>80v.\+'
+
+  " Replace all instances of text under cursor
+  vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
 ]]
 
 -- Move selection in visual mode
@@ -314,3 +317,61 @@ function ListBuffers()
     print(string.format("%-15s|  %s", buf_type, buf_name))
   end
 end
+
+-- Replace buffer's contents with a command and preserve the cursor
+local function UpdateBufferContent(command)
+  return function()
+    -- Save current cursor position
+    local saveCursor = vim.api.nvim_win_get_cursor(0)
+
+    -- Execute your command and capture its output
+    local output = vim.fn.systemlist(command)
+
+    -- Strip ANSI color codes from the output
+    local strippedOutput = {}
+    for _, line in ipairs(output) do
+      local strippedLine = line:gsub("\27%[[%d;]*[mK]", "") -- Remove ANSI escape sequences
+      table.insert(strippedOutput, strippedLine)
+    end
+
+    -- Clear the buffer and insert the stripped output
+    vim.api.nvim_buf_set_lines(0, 0, -1, false, strippedOutput)
+
+    -- Restore cursor position
+    vim.api.nvim_win_set_cursor(0, saveCursor)
+  end
+end
+
+-- Continually replace buffer contents with command
+function Watch(command, refresh_rate)
+  local uv = vim.loop or vim.uv
+
+  -- Create a new buffer
+  local buf = vim.api.nvim_create_buf(false, true)
+  vim.api.nvim_set_current_buf(buf)
+
+  -- Set up a timer to run the function every 500ms
+  local watch_timer = uv.new_timer()
+  watch_timer:start(refresh_rate, refresh_rate, vim.schedule_wrap(UpdateBufferContent(command)))
+
+  local group = vim.api.nvim_create_augroup("my-group", { clear = true })
+
+  -- Stop the timer when the buffer is unloaded
+  vim.api.nvim_create_autocmd("BufUnload", {
+    group = group,
+    buffer = 0,
+    callback = function()
+      watch_timer:stop()
+    end,
+  })
+  -- Stop the timer when quitting Neovim
+  vim.api.nvim_create_autocmd("VimLeavePre", {
+    group = group,
+    callback = function()
+      watch_timer:stop()
+    end,
+  })
+end
+
+-- Reload all highlights again
+require("base46").load_all_highlights()

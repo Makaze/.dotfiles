@@ -31,14 +31,22 @@ M.override = {
   IndentBlanklineChar = { fg = "one_bg3" },
   -- IndentBlanklineContextSpaceChar = { fg = "teal" },
 
-  ["@variable"] = { link = "@constant" },
-  ["@variable.member"] = { link = "@constant" },
+  ["@variable"] = { fg = { "red", 0 } },
+  ["@constant"] = { bold = true },
+  ["@variable.member"] = { bold = false },
+  ["@property"] = { fg = { "teal", 20 } },
   ["@comment"] = { link = "Comment" },
 }
 
 ---@type HLTable
 M.add = {
   NvimTreeOpenedFolderName = { fg = "green", bold = true },
+  -- ["@lsp"] = { link = "Special" },
+  ["@lsp.mod.defaultLibrary"] = { link = "Special" },
+  ["@lsp.typemod.keyword.documentation"] = { link = "Special" },
+  ["@lsp.type.variable"] = { bold = true },
+  ["@lsp.mod.global"] = { bold = true },
+  ["@lsp.typemod.variable.global"] = { link = "@constant" },
 }
 
 return M

@@ -55,6 +55,14 @@ M.general = {
       ":Telescope buffers<CR>",
       "Search buffers",
     },
+    ["<leader>fd"] = {
+      ":Telescope diagnostics<CR>",
+      "Search diagnostics",
+    },
+    ["<C-i>"] = {
+      ":Inspect<CR>",
+      "Inspect node under cursor",
+    },
   },
   o = {
     ["s"] = {

@@ -100,8 +100,6 @@ local default_plugins = {
     config = function(_, opts)
       dofile(vim.g.base46_cache .. "syntax")
       require("nvim-treesitter.configs").setup(opts)
-      vim.api.nvim_set_hl(0, "@variable.member", { link = "@constant" })
-      vim.api.nvim_set_hl(0, "@comment", { link = "Comment" })
     end,
     event = "VeryLazy",
   },
@@ -940,30 +938,30 @@ local default_plugins = {
     lazy = false,
   },
 
-  -- {
-  --   "folke/flash.nvim",
-  --   event = "VeryLazy",
-  --   ---@type Flash.Config
-  --   opts = {},
-  --   -- stylua: ignore
-  --   keys = {
-  --     { "<C-f>", mode = { "n", "x", "o" },
-  --         function() require("flash").jump() end, desc = "Flash"
-  --     },
-  --     { "<leader>sf", mode = { "n", "o", "x" },
-  --         function() require("flash").treesitter() end, desc = "Flash Treesitter"
-  --     },
-  --     { "<leader>rs", mode = "o",
-  --         function() require("flash").remote() end, desc = "Remote Flash"
-  --     },
-  --     -- { "<leader>ts", mode = { "o", "x" },
-  --     --     function() require("flash").treesitter_search() end, desc = "Treesitter Search"
-  --     -- },
-  --     -- { "<C-s>", mode = { "c" },
-  --     --     function() require("flash").toggle() end, desc = "Toggle Flash Search"
-  --     -- },
-  --   },
-  -- },
+  {
+    "folke/flash.nvim",
+    event = "VeryLazy",
+    ---@type Flash.Config
+    opts = {},
+    -- stylua: ignore
+    keys = {
+      { "<C-f>", mode = { "n", "x", "o" },
+          function() require("flash").jump() end, desc = "Flash"
+      },
+      { "<leader>sf", mode = { "n", "o", "x" },
+          function() require("flash").treesitter() end, desc = "Flash Treesitter"
+      },
+      { "<leader>rs", mode = "o",
+          function() require("flash").remote() end, desc = "Remote Flash"
+      },
+      -- { "<leader>ts", mode = { "o", "x" },
+      --     function() require("flash").treesitter_search() end, desc = "Treesitter Search"
+      -- },
+      -- { "<C-s>", mode = { "c" },
+      --     function() require("flash").toggle() end, desc = "Toggle Flash Search"
+      -- },
+    },
+  },
 
   -- {
   --   "simrat39/symbols-outline.nvim",
@@ -999,6 +997,7 @@ local default_plugins = {
     "j-hui/fidget.nvim",
     opts = {
       notification = {
+        -- override_vim_notify = true,
         window = {
           winblend = 0,
         },
@@ -1623,10 +1622,18 @@ local default_plugins = {
     event = "VeryLazy",
   },
 
+  -- {
+  --   "miikanissi/modus-themes.nvim",
+  --   priority = 1000,
+  -- },
+
   {
-    "miikanissi/modus-themes.nvim",
-    priority = 1000,
+    "Makaze/watch.nvim",
+    cmd = { "WatchStart", "WatchStop" },
   },
+
+  -- { "powerman/vim-plugin-AnsiEsc", config = false, lazy = false },
+  { "lambdalisue/suda.vim", config = false, lazy = false },
 }
 
 local config = require("core.utils").load_config()

@@ -21,6 +21,9 @@ M.on_attach = function(client, bufnr)
     client.server_capabilities.semanticTokensProvider = nil
   end
   navic.attach(client, bufnr)
+
+  -- Reload all highlights on lsp attach
+  require("base46").load_all_highlights()
 end
 
 M.capabilities = vim.lsp.protocol.make_client_capabilities()

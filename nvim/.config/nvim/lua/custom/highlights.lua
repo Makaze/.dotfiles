@@ -34,7 +34,7 @@ M.override = {
   ["@variable"] = { fg = { "red", 0 } },
   ["@constant"] = { bold = true },
   ["@variable.member"] = { bold = false },
-  ["@property"] = { fg = { "teal", 20 } },
+  ["@property"] = { fg = { "teal", 25 } },
   ["@comment"] = { link = "Comment" },
 }
 

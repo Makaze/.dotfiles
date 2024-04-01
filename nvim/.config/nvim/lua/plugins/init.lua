@@ -14,7 +14,7 @@ local default_plugins = {
 
   {
     "NvChad/ui",
-    branch = "v2.0",
+    -- branch = "v2.0",
     lazy = false,
   },
 
@@ -128,40 +128,40 @@ local default_plugins = {
     event = "VeryLazy",
   },
 
-  -- {
-  --   "smoka7/hop.nvim",
-  --   config = function(_, opts)
-  --     dofile(vim.g.base46_cache .. "hop") -- add this line before calling hop setup
-  --     require("hop").setup(opts)
-  --   end,
-  --   event = "VeryLazy",
-  --   keys = {
-  --     {
-  --       mode = { "v", "n" },
-  --       "<Leader>hw",
-  --       "<cmd>HopWord<cr>",
-  --       desc = "Hop to a word on the screen",
-  --     },
-  --     {
-  --       mode = { "v", "n" },
-  --       "<Leader>ha",
-  --       "<cmd>HopAnywhere<cr>",
-  --       desc = "Hop anywhere on the screen",
-  --     },
-  --     {
-  --       mode = { "v", "n" },
-  --       "<Leader>hl",
-  --       "<cmd>HopLine<cr>",
-  --       desc = "Hop to a line on the screen",
-  --     },
-  --     {
-  --       mode = { "v", "n" },
-  --       "<Leader>hp",
-  --       "<cmd>HopPattern<cr>",
-  --       desc = "Hop to a pattern on the screen",
-  --     },
-  --   },
-  -- },
+  {
+    "smoka7/hop.nvim",
+    config = function(_, opts)
+      dofile(vim.g.base46_cache .. "hop") -- add this line before calling hop setup
+      require("hop").setup(opts)
+    end,
+    event = "VeryLazy",
+    keys = {
+      {
+        mode = { "v", "n" },
+        "<Leader>Hw",
+        "<cmd>HopWord<cr>",
+        desc = "Hop to a word on the screen",
+      },
+      {
+        mode = { "v", "n" },
+        "<Leader>Ha",
+        "<cmd>HopAnywhere<cr>",
+        desc = "Hop anywhere on the screen",
+      },
+      {
+        mode = { "v", "n" },
+        "<Leader>Hl",
+        "<cmd>HopLine<cr>",
+        desc = "Hop to a line on the screen",
+      },
+      {
+        mode = { "v", "n" },
+        "<Leader>Hp",
+        "<cmd>HopPattern<cr>",
+        desc = "Hop to a pattern on the screen",
+      },
+    },
+  },
 
   -- {
   --   "rmagatti/goto-preview",
@@ -618,6 +618,17 @@ local default_plugins = {
 
   {
     "mrjones2014/smart-splits.nvim",
+    opts = {
+      -- at_edge = function(context)
+      --   --- Get direction uppercase char
+      --   --- @type string
+      --   local dir = context.direction
+      --   dir = dir:sub(1, 1):upper()
+      --
+      --   vim.cmd("silent !tmux select-pane -" .. dir)
+      --   vim.notify("Sent: " .. dir)
+      -- end,
+    },
     config = function(_, opts)
       require("smart-splits").setup(opts)
       -- recommended mappings
@@ -938,35 +949,28 @@ local default_plugins = {
     lazy = false,
   },
 
-  {
-    "folke/flash.nvim",
-    event = "VeryLazy",
-    ---@type Flash.Config
-    opts = {},
-    -- stylua: ignore
-    keys = {
-      { "<C-f>", mode = { "n", "x", "o" },
-          function() require("flash").jump() end, desc = "Flash"
-      },
-      { "<leader>sf", mode = { "n", "o", "x" },
-          function() require("flash").treesitter() end, desc = "Flash Treesitter"
-      },
-      { "<leader>rs", mode = "o",
-          function() require("flash").remote() end, desc = "Remote Flash"
-      },
-      -- { "<leader>ts", mode = { "o", "x" },
-      --     function() require("flash").treesitter_search() end, desc = "Treesitter Search"
-      -- },
-      -- { "<C-s>", mode = { "c" },
-      --     function() require("flash").toggle() end, desc = "Toggle Flash Search"
-      -- },
-    },
-  },
-
   -- {
-  --   "simrat39/symbols-outline.nvim",
-  --   config = true,
-  --   cmd = { "SymbolsOutline" },
+  --   "folke/flash.nvim",
+  --   event = "VeryLazy",
+  --   opts = {},
+  --   -- stylua: ignore
+  --   keys = {
+  --     { "<C-f>", mode = { "n", "x", "o" },
+  --         function() require("flash").jump() end, desc = "Flash"
+  --     },
+  --     { "<leader>sf", mode = { "n", "o", "x" },
+  --         function() require("flash").treesitter() end, desc = "Flash Treesitter"
+  --     },
+  --     { "<leader>rs", mode = "o",
+  --         function() require("flash").remote() end, desc = "Remote Flash"
+  --     },
+  --     -- { "<leader>ts", mode = { "o", "x" },
+  --     --     function() require("flash").treesitter_search() end, desc = "Treesitter Search"
+  --     -- },
+  --     -- { "<C-s>", mode = { "c" },
+  --     --     function() require("flash").toggle() end, desc = "Toggle Flash Search"
+  --     -- },
+  --   },
   -- },
 
   {
@@ -978,6 +982,42 @@ local default_plugins = {
     },
     opts = {
       -- Your setup opts here
+      symbols = {
+        icons = {
+          File = { icon = "󰈔", hl = "Identifier" },
+          Module = { icon = "󰆧", hl = "Include" },
+          Namespace = { icon = "󰅪", hl = "Include" },
+          Package = { icon = "󰏗", hl = "Include" },
+          Class = { icon = "", hl = "Type" },
+          Method = { icon = "ƒ", hl = "Function" },
+          Property = { icon = "", hl = "Identifier" },
+          Field = { icon = "󰆨", hl = "Identifier" },
+          Constructor = { icon = "", hl = "Special" },
+          Enum = { icon = "", hl = "Type" },
+          Interface = { icon = "󰜰", hl = "Type" },
+          Function = { icon = "ƒ", hl = "Function" },
+          Variable = { icon = "", hl = "Constant" },
+          Constant = { icon = "", hl = "Constant" },
+          String = { icon = "", hl = "String" },
+          Number = { icon = "#", hl = "Number" },
+          Boolean = { icon = "", hl = "Boolean" },
+          Array = { icon = "", hl = "Constant" },
+          Object = { icon = "󰅩", hl = "Type" },
+          Key = { icon = "", hl = "Type" },
+          Null = { icon = "NULL", hl = "Type" },
+          EnumMember = { icon = "", hl = "Identifier" },
+          Struct = { icon = "𝓢", hl = "Structure" },
+          Event = { icon = "", hl = "Type" },
+          Operator = { icon = "+", hl = "Identifier" },
+          TypeParameter = { icon = "", hl = "Identifier" },
+          Component = { icon = "󰅴", hl = "Function" },
+          Fragment = { icon = "󰅴", hl = "Constant" },
+          TypeAlias = { icon = " ", hl = "Type" },
+          Parameter = { icon = " ", hl = "Identifier" },
+          StaticMethod = { icon = " ", hl = "Function" },
+          Macro = { icon = " ", hl = "Function" },
+        },
+      },
     },
   },
 
@@ -1144,31 +1184,35 @@ local default_plugins = {
 
       vim.keymap.set("n", "<leader>a", function()
         harpoon:list():append()
-      end)
+      end, { desc = "Harpoon: Append buffer" })
       vim.keymap.set("n", "<C-e>", function()
         harpoon.ui:toggle_quick_menu(harpoon:list())
-      end)
+      end, { desc = "Harpoon: Toggle quick menu" })
 
-      vim.keymap.set("n", "<F8>", function()
+      vim.keymap.set("n", "<leader>h", function()
         harpoon:list():select(1)
-      end)
-      vim.keymap.set("n", "<F9>", function()
+      end, { desc = "Harpoon: Mark 1" })
+      vim.keymap.set("n", "<leader>j", function()
         harpoon:list():select(2)
-      end)
-      vim.keymap.set("n", "<F10>", function()
+      end, { desc = "Harpoon: Mark 2" })
+      vim.keymap.set("n", "<leader>k", function()
         harpoon:list():select(3)
-      end)
-      vim.keymap.set("n", "<F11>", function()
+      end, { desc = "Harpoon: Mark 3" })
+      vim.keymap.set("n", "<leader>l", function()
         harpoon:list():select(4)
-      end)
+      end, { desc = "Harpoon: Mark 4" })
 
       -- vim.keymap.set("n", "<leader><F5>", function()
       --   harpoon:list():clear()
       -- end)
 
       -- Toggle previous & next buffers stored within Harpoon list
-      -- vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end)
-      -- vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
+      vim.keymap.set("n", "<leader><C-p>", function()
+        harpoon:list():prev()
+      end, { desc = "Harpoon prev" })
+      vim.keymap.set("n", "<leader><C-n>", function()
+        harpoon:list():next()
+      end, { desc = "Harpoon next" })
     end,
   },
 
@@ -1180,7 +1224,7 @@ local default_plugins = {
       local harpoon_hydra = Hydra {
         name = "HARPOON",
         mode = { "n", "x" },
-        body = "<leader>j",
+        body = "<leader>p",
         config = {
           color = "blue",
           invoke_on_body = true,
@@ -1634,6 +1678,12 @@ local default_plugins = {
 
   -- { "powerman/vim-plugin-AnsiEsc", config = false, lazy = false },
   { "lambdalisue/suda.vim", config = false, lazy = false },
+
+  {
+    "subnut/nvim-ghost.nvim",
+    -- config = true,
+    event = "VeryLazy",
+  },
 }
 
 local config = require("core.utils").load_config()

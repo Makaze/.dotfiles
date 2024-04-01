@@ -22,6 +22,10 @@ M.on_attach = function(client, bufnr)
   end
   navic.attach(client, bufnr)
 
+  if client.server_capabilities.inlayHintProvider then
+    vim.lsp.inlay_hint.enable(bufnr, true)
+  end
+
   -- Reload all highlights on lsp attach
   require("base46").load_all_highlights()
 end

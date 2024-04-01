@@ -80,7 +80,7 @@ local options = {
     ["<C-e>"] = cmp.mapping.close(),
     -- Make enter work again by disable
     ["<CR>"] = cmp.mapping.confirm(),
-    ["<C-n>"] = cmp.mapping(function(fallback)
+    ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()
       elseif require("luasnip").expand_or_jumpable() then
@@ -92,7 +92,7 @@ local options = {
       "i",
       "s",
     }),
-    ["<C-p>"] = cmp.mapping(function(fallback)
+    ["<S-Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_prev_item()
       elseif require("luasnip").jumpable(-1) then
@@ -112,7 +112,7 @@ local options = {
     { name = "nvim_lua" },
     { name = "path" },
     { name = "orgmode" },
-    { name = "cmdline" },
+    -- { name = "cmdline" },
   },
 }
 

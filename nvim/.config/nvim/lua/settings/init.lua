@@ -146,8 +146,11 @@ vim.cmd [[
   " Highlight long lines
   " match ErrorMsg '\%>80v.\+'
 
-  " Replace all instances of text under cursor
+  " Replace all instances of char-wise visual selection
   vnoremap <C-r> "hy:%s/<C-r>h//gc<left><left><left>
+
+  " Close buffer but not window
+  nnoremap <leader>x <cmd>bp<cr><cmd>bd<space>#<cr>
 ]]
 
 -- Move selection in visual mode

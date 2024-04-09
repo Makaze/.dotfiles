@@ -937,17 +937,11 @@ local default_plugins = {
     event = "VeryLazy",
   },
 
-  {
-    "tzachar/highlight-undo.nvim",
-    config = true,
-    event = "VeryLazy",
-  },
-
-  {
-    "ojroques/nvim-bufdel",
-    config = true,
-    lazy = false,
-  },
+  -- {
+  --   "tzachar/highlight-undo.nvim",
+  --   config = true,
+  --   event = "VeryLazy",
+  -- },
 
   -- {
   --   "folke/flash.nvim",
@@ -1077,7 +1071,7 @@ local default_plugins = {
   },
 
   {
-    "jonarrienim/telescope-cmdline.nvim",
+    "Makaze/telescope-cmdline.nvim",
     -- branch = "command-builder",
     config = function(_, opts)
       require("telescope").load_extension "cmdline"
@@ -1687,10 +1681,16 @@ local default_plugins = {
   -- { "powerman/vim-plugin-AnsiEsc", config = false, lazy = false },
   { "lambdalisue/suda.vim", config = false, lazy = false },
 
+--  {
+--    "subnut/nvim-ghost.nvim",
+--    -- config = true,
+--    event = "VeryLazy",
+--  },
+
   {
-    "subnut/nvim-ghost.nvim",
-    -- config = true,
-    event = "VeryLazy",
+    "kevinhwang91/rnvimr",
+    config = false,
+    event = "VeryLazy"
   },
 }
 

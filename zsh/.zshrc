@@ -247,3 +247,5 @@ export PATH="$DPRINT_INSTALL/bin:$PATH"
 . $HOME/.profile
 
 export PATH=$PATH:/home/makaze/.spicetify
+
+export XDG_DATA_HOME=$HOME/.local/share

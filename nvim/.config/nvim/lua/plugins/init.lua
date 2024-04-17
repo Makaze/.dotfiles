@@ -1632,7 +1632,7 @@ local default_plugins = {
 
   {
     "Makaze/watch.nvim",
-    cmd = { "WatchStart", "WatchStop" },
+    cmd = { "WatchStart", "WatchStop", "WatchFile" },
   },
 
   -- { "powerman/vim-plugin-AnsiEsc", config = false, lazy = false },

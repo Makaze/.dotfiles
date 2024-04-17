@@ -706,8 +706,27 @@ local default_plugins = {
     event = "VeryLazy",
     config = function(_, opts)
       require("telescope").load_extension "zoxide"
-      vim.keymap.set("n", "<leader>cd", "<cmd>Telescope zoxide list<cr>")
+      vim.keymap.set("n", "<leader>cd", "<cmd>Telescope zoxide list<cr>", { desc = "Telescope zoxide" })
     end,
+  },
+
+  {
+    "fdschmidt93/telescope-egrepify.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+    config = function(_, opts)
+      require("telescope").load_extension "egrepify"
+    end,
+    event = "VeryLazy",
+  },
+
+  {
+    "tsakirist/telescope-lazy.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+    config = function(_, opts)
+      require("telescope").load_extension "lazy"
+      vim.keymap.set("n", "<leader>L", "<cmd>Telescope lazy<cr>", { desc = "Telescope Lazy" })
+    end,
+    event = "VeryLazy",
   },
 
   -- {
@@ -1077,7 +1096,7 @@ local default_plugins = {
   },
 
   {
-    "jonarrienim/telescope-cmdline.nvim",
+    "Makaze/telescope-cmdline.nvim",
     -- branch = "command-builder",
     config = function(_, opts)
       require("telescope").load_extension "cmdline"
@@ -1186,13 +1205,14 @@ local default_plugins = {
     lazy = false,
     config = function()
       local harpoon = require "harpoon"
+
       -- REQUIRED
       harpoon:setup()
       -- REQUIRED
 
       vim.keymap.set("n", "<leader>a", function()
-        harpoon:list():append()
-      end, { desc = "Harpoon: Append buffer" })
+        harpoon:list():add()
+      end, { desc = "Harpoon: Add buffer" })
       vim.keymap.set("n", "<C-e>", function()
         harpoon.ui:toggle_quick_menu(harpoon:list())
       end, { desc = "Harpoon: Toggle quick menu" })
@@ -1604,80 +1624,11 @@ local default_plugins = {
     lazy = false,
   },
 
-  -- Pomodoro Timer
-  -- {
-  --   "epwalsh/pomo.nvim",
-  --   version = "*", -- Recommended, use latest release instead of latest commit
-  --   lazy = true,
-  --   cmd = { "TimerStart", "TimerRepeat" },
-  --   dependencies = {
-  --     -- Optional, but highly recommended if you want to use the "Default" timer
-  --     "rcarriga/nvim-notify",
-  --   },
-  --   opts = {
-  --     -- See below for full list of options 👇
-  --     notifiers = {
-  --       -- The "Default" notifier uses 'vim.notify' and works best when you have 'nvim-notify' installed.
-  --       {
-  --         name = "Default",
-  --         opts = {
-  --           -- With 'nvim-notify', when 'sticky = true' you'll have a live timer pop-up
-  --           -- continuously displayed. If you only want a pop-up notification when the timer starts
-  --           -- and finishes, set this to false.
-  --           sticky = true,
-  --
-  --           -- Configure the display icons:
-  --           title_icon = "󱎫",
-  --           text_icon = "󰄉",
-  --           -- Replace the above with these if you don't have a patched font:
-  --           -- title_icon = "⏳",
-  --           -- text_icon = "⏱️",
-  --         },
-  --         -- done = function(self)
-  --         --   print(string.format("Timer #%d, %s, complete", self.timer.id, self.timer.name))
-  --         --   vim.cmd "silent! !canberra-gtk-play -i bell"
-  --         -- end,
-  --       },
-  --
-  --       -- The "System" notifier sends a system notification when the timer is finished.
-  --       -- Currently this is only available on MacOS.
-  --       -- Tracking: https://github.com/epwalsh/pomo.nvim/issues/3
-  --       -- { name = "System" },
-  --
-  --       -- You can also define custom notifiers by providing an "init" function instead of a name.
-  --       -- See "Defining custom notifiers" below for an example 👇
-  --       -- { init = function(timer) ... end }
-  --     },
-  --   },
-  -- },
-
-  -- {
-  --   "bartdorsey/quickclip.nvim",
-  --   config = true,
-  --   event = "VeryLazy",
-  -- },
-
-  -- { "glacambre/firenvim",
-  --
-  --   -- Lazy load firenvim
-  --   -- Explanation: https://github.com/folke/lazy.nvim/discussions/463#discussioncomment-4819297
-  --   lazy = not vim.g.started_by_firenvim,
-  --   build = function()
-  --     vim.cmd '!setenv $NVIM_APPNAME="kickstart.nvim"'
-  --     vim.fn["firenvim#install"](0)
-  --   end,
-  -- },
-
   {
     "machakann/vim-swap",
     -- config = false,
     event = "VeryLazy",
   },
-
-  -- {
-  --   "miikanissi/modus-themes.nvim",
-  --   priority = 1000,
-  -- },
 
   {
     "Makaze/watch.nvim",
@@ -1687,11 +1638,11 @@ local default_plugins = {
   -- { "powerman/vim-plugin-AnsiEsc", config = false, lazy = false },
   { "lambdalisue/suda.vim", config = false, lazy = false },
 
-  {
-    "subnut/nvim-ghost.nvim",
-    -- config = true,
-    event = "VeryLazy",
-  },
+  -- {
+  --   "subnut/nvim-ghost.nvim",
+  --   -- config = true,
+  --   event = "VeryLazy",
+  -- },
 }
 
 local config = require("core.utils").load_config()

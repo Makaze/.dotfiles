@@ -33,7 +33,7 @@ M.general = {
       "Show diagnostics",
       opts = { nowait = true },
     },
-    ["<leader>u"] = { "<cmd>Telescope undo<cr>", desc = "Telescope undo" },
+    -- ["<leader>u"] = { "<cmd>Telescope undo<cr>", desc = "Telescope undo" },
     -- ["s"] = {
     --   function()
     --     require("flash").jump()
@@ -65,26 +65,26 @@ M.general = {
     },
   },
   o = {
-    ["s"] = {
-      function()
-        require("flash").jump()
-      end,
-      desc = "Flash",
-      opts = { noremap = true },
-    },
-    ["S"] = {
-      function()
-        require("flash").treesitter()
-      end,
-      desc = "Flash Treesitter",
-      opts = { noremap = true },
-    },
-    ["<leader>rs"] = {
-      function()
-        require("flash").remote()
-      end,
-      desc = "Remote Flash",
-    },
+    -- ["s"] = {
+    --   function()
+    --     require("flash").jump()
+    --   end,
+    --   desc = "Flash",
+    --   opts = { noremap = true },
+    -- },
+    -- ["S"] = {
+    --   function()
+    --     require("flash").treesitter()
+    --   end,
+    --   desc = "Flash Treesitter",
+    --   opts = { noremap = true },
+    -- },
+    -- ["<leader>rs"] = {
+    --   function()
+    --     require("flash").remote()
+    --   end,
+    --   desc = "Remote Flash",
+    -- },
     ["<leader>ts"] = {
       function()
         require("flash").treesitter_search()
@@ -93,34 +93,34 @@ M.general = {
     },
   },
   x = {
-    ["s"] = {
-      function()
-        require("flash").jump()
-      end,
-      desc = "Flash",
-      opts = { noremap = true },
-    },
-    ["S"] = {
-      function()
-        require("flash").treesitter()
-      end,
-      desc = "Flash Treesitter",
-      opts = { noremap = true },
-    },
-    ["<leader>ts"] = {
-      function()
-        require("flash").treesitter_search()
-      end,
-      desc = "Treesitter Search",
-    },
+    -- ["s"] = {
+    --   function()
+    --     require("flash").jump()
+    --   end,
+    --   desc = "Flash",
+    --   opts = { noremap = true },
+    -- },
+    -- ["S"] = {
+    --   function()
+    --     require("flash").treesitter()
+    --   end,
+    --   desc = "Flash Treesitter",
+    --   opts = { noremap = true },
+    -- },
+    -- ["<leader>ts"] = {
+    --   function()
+    --     require("flash").treesitter_search()
+    --   end,
+    --   desc = "Treesitter Search",
+    -- },
   },
   c = {
-    ["<C-s>"] = {
-      function()
-        require("flash").toggle()
-      end,
-      desc = "Toggle Flash Search",
-    },
+    -- ["<C-s>"] = {
+    --   function()
+    --     require("flash").toggle()
+    --   end,
+    --   desc = "Toggle Flash Search",
+    -- },
   },
   v = {},
   t = {

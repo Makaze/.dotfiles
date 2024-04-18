@@ -117,7 +117,6 @@ vim.cmd [[
 
   nnoremap <C-d>   yyp
   xnoremap <C-d>   yyp
-  inoremap <C-d>   yyp
 
   " Easier redo
   nnoremap U       <C-r>

@@ -55,15 +55,6 @@ local default_plugins = {
     end,
   },
 
-  -- {
-  --   "AlexvZyl/nordic.nvim",
-  --   lazy = false,
-  --   priority = 1000,
-  --   config = function()
-  --     require("nordic").load()
-  --   end,
-  -- },
-
   {
     "LunarVim/bigfile.nvim",
     config = true,
@@ -1632,6 +1623,7 @@ local default_plugins = {
 
   {
     "Makaze/watch.nvim",
+    branch = "compatibility",
     cmd = { "WatchStart", "WatchStop", "WatchFile" },
   },
 

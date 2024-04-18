@@ -1,5 +1,5 @@
 -- All plugins have lazy=true by default,to load a plugin on startup just lazy=false
--- List of all default plugins & their definitions
+-- List of all default plugins & their definitions test
 local default_plugins = {
 
   "nvim-lua/plenary.nvim",
@@ -32,7 +32,7 @@ local default_plugins = {
   {
     "NvChad/nvim-colorizer.lua",
     init = function()
-      require("core.utils").lazy_load "nvim-colorizer.lua"
+      require("core.utils").lazy_load("nvim-colorizer.lua")
     end,
     config = function(_, opts)
       require("colorizer").setup(opts)
@@ -47,7 +47,7 @@ local default_plugins = {
   {
     "nvim-tree/nvim-web-devicons",
     opts = function()
-      return { override = require "nvchad.icons.devicons" }
+      return { override = require("nvchad.icons.devicons") }
     end,
     config = function(_, opts)
       dofile(vim.g.base46_cache .. "devicons")
@@ -65,13 +65,13 @@ local default_plugins = {
     "lukas-reineke/indent-blankline.nvim",
     version = "2.20.7",
     init = function()
-      require("core.utils").lazy_load "indent-blankline.nvim"
+      require("core.utils").lazy_load("indent-blankline.nvim")
     end,
     opts = function()
       return require("plugins.configs.others").blankline
     end,
     config = function(_, opts)
-      require("core.utils").load_mappings "blankline"
+      require("core.utils").load_mappings("blankline")
       dofile(vim.g.base46_cache .. "blankline")
       require("indent_blankline").setup(opts)
     end,
@@ -79,14 +79,14 @@ local default_plugins = {
 
   {
     "nvim-treesitter/nvim-treesitter",
-    -- commit = "515b00598a4786631466d5c4b7c7fd0188ae1022",
+    commit = "515b00598a4786631466d5c4b7c7fd0188ae1022",
     init = function()
-      require("core.utils").lazy_load "nvim-treesitter"
+      require("core.utils").lazy_load("nvim-treesitter")
     end,
     cmd = { "TSInstall", "TSBufEnable", "TSBufDisable", "TSModuleInfo" },
     build = ":TSUpdate",
     opts = function()
-      return require "plugins.configs.treesitter"
+      return require("plugins.configs.treesitter")
     end,
     config = function(_, opts)
       dofile(vim.g.base46_cache .. "syntax")
@@ -112,9 +112,9 @@ local default_plugins = {
     end,
     config = function(_, opts)
       require("treesitter-context").setup(opts)
-      vim.cmd [[
+      vim.cmd([[
         hi TreesitterContextBottom gui=underline guisp=Grey
-      ]]
+      ]])
     end,
     event = "VeryLazy",
   },
@@ -209,7 +209,7 @@ local default_plugins = {
     config = function(_, opts)
       dofile(vim.g.base46_cache .. "navic") -- add this line before calling navic setup
       require("nvim-navic").setup(opts)
-      vim.cmd [[
+      vim.cmd([[
         hi NavicIconsFile guibg=NONE
         hi NavicIconsModule guibg=NONE
         hi NavicIconsNamespace guibg=NONE
@@ -238,7 +238,7 @@ local default_plugins = {
         hi NavicIconsTypeParameter guibg=NONE
         hi NavicText guibg=NONE
         hi NavicSeparator guibg=NONE
-      ]]
+      ]])
     end,
     event = "VeryLazy",
   },
@@ -252,11 +252,11 @@ local default_plugins = {
       vim.api.nvim_create_autocmd({ "BufRead" }, {
         group = vim.api.nvim_create_augroup("GitSignsLazyLoad", { clear = true }),
         callback = function()
-          vim.fn.system("git -C " .. '"' .. vim.fn.expand "%:p:h" .. '"' .. " rev-parse")
+          vim.fn.system("git -C " .. '"' .. vim.fn.expand("%:p:h") .. '"' .. " rev-parse")
           if vim.v.shell_error == 0 then
-            vim.api.nvim_del_augroup_by_name "GitSignsLazyLoad"
+            vim.api.nvim_del_augroup_by_name("GitSignsLazyLoad")
             vim.schedule(function()
-              require("lazy").load { plugins = { "gitsigns.nvim" } }
+              require("lazy").load({ plugins = { "gitsigns.nvim" } })
             end)
           end
         end,
@@ -276,7 +276,7 @@ local default_plugins = {
     "williamboman/mason.nvim",
     cmd = { "Mason", "MasonInstall", "MasonInstallAll", "MasonUninstall", "MasonUninstallAll", "MasonLog" },
     opts = function()
-      return require "plugins.configs.mason"
+      return require("plugins.configs.mason")
     end,
     config = function(_, opts)
       dofile(vim.g.base46_cache .. "mason")
@@ -294,15 +294,15 @@ local default_plugins = {
   {
     "neovim/nvim-lspconfig",
     init = function()
-      require("core.utils").lazy_load "nvim-lspconfig"
+      require("core.utils").lazy_load("nvim-lspconfig")
     end,
     config = function()
-      require "plugins.configs.lspconfig"
+      require("plugins.configs.lspconfig")
     end,
     dependencies = {
       "jose-elias-alvarez/null-ls.nvim",
       config = function()
-        require "custom.configs.null-ls"
+        require("custom.configs.null-ls")
       end,
       event = "VeryLazy",
       "SmiteshP/nvim-navbuddy",
@@ -327,7 +327,7 @@ local default_plugins = {
       -- configurations go here
     },
     init = function()
-      vim.cmd [[ hi barbecue_normal guibg=#28282800 ]]
+      vim.cmd([[ hi barbecue_normal guibg=#28282800 ]])
     end,
     event = "VeryLazy",
   },
@@ -421,7 +421,7 @@ local default_plugins = {
             ["end"] = { args.line2, end_line:len() },
           }
         end
-        require("conform").format { async = true, lsp_fallback = true, range = range }
+        require("conform").format({ async = true, lsp_fallback = true, range = range })
       end, { range = true })
     end,
     event = "VeryLazy",
@@ -439,9 +439,9 @@ local default_plugins = {
         opts = { history = true, updateevents = "TextChanged,TextChangedI" },
         config = function(_, opts)
           -- VSCode format
-          vim.g.vscode_snippets_path = vim.fn.stdpath "config" .. "/lua/custom/configs/vscode_snippets"
+          vim.g.vscode_snippets_path = vim.fn.stdpath("config") .. "/lua/custom/configs/vscode_snippets"
           -- lua format
-          vim.g.lua_snippets_path = vim.fn.stdpath "config" .. "/lua/custom/configs/lua_snippets"
+          vim.g.lua_snippets_path = vim.fn.stdpath("config") .. "/lua/custom/configs/lua_snippets"
           require("plugins.configs.others").luasnip(opts)
         end,
       },
@@ -455,11 +455,11 @@ local default_plugins = {
         },
         config = function(_, opts)
           require("nvim-autopairs").setup(opts)
-          require("nvim-autopairs").remove_rule '"'
-          require("nvim-autopairs").remove_rule "'"
+          require("nvim-autopairs").remove_rule('"')
+          require("nvim-autopairs").remove_rule("'")
 
           -- setup cmp for autopairs
-          local cmp_autopairs = require "nvim-autopairs.completion.cmp"
+          local cmp_autopairs = require("nvim-autopairs.completion.cmp")
           require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
         end,
       },
@@ -475,10 +475,10 @@ local default_plugins = {
       },
     },
     opts = function()
-      return require "plugins.configs.cmp"
+      return require("plugins.configs.cmp")
     end,
     config = function(_, opts)
-      local cmp = require "cmp"
+      local cmp = require("cmp")
       require("cmp").setup(opts)
       -- `:` cmdline setup.
       require("cmp").setup.cmdline(":", {
@@ -508,7 +508,7 @@ local default_plugins = {
       { "gb", mode = "x", desc = "Comment toggle blockwise (visual)" },
     },
     init = function()
-      require("core.utils").load_mappings "comment"
+      require("core.utils").load_mappings("comment")
     end,
     config = function(_, opts)
       require("Comment").setup(opts)
@@ -560,7 +560,7 @@ local default_plugins = {
     },
     config = function(_, opts)
       require("no-neck-pain").setup(opts)
-      vim.cmd [[ NoNeckPain ]]
+      vim.cmd([[ NoNeckPain ]])
     end,
   },
 
@@ -569,10 +569,10 @@ local default_plugins = {
     "nvim-tree/nvim-tree.lua",
     cmd = { "NvimTreeToggle", "NvimTreeFocus" },
     init = function()
-      require("core.utils").load_mappings "nvimtree"
+      require("core.utils").load_mappings("nvimtree")
     end,
     opts = function()
-      return require "plugins.configs.nvimtree"
+      return require("plugins.configs.nvimtree")
     end,
     config = function(_, opts)
       dofile(vim.g.base46_cache .. "nvimtree")
@@ -589,14 +589,14 @@ local default_plugins = {
     },
     -- cmd = "Telescope",
     init = function()
-      require("core.utils").load_mappings "telescope"
+      require("core.utils").load_mappings("telescope")
     end,
     opts = function()
-      return require "plugins.configs.telescope"
+      return require("plugins.configs.telescope")
     end,
     config = function(_, opts)
       dofile(vim.g.base46_cache .. "telescope")
-      local telescope = require "telescope"
+      local telescope = require("telescope")
       telescope.setup(opts)
 
       -- load extensions
@@ -696,7 +696,7 @@ local default_plugins = {
     dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
     event = "VeryLazy",
     config = function(_, opts)
-      require("telescope").load_extension "zoxide"
+      require("telescope").load_extension("zoxide")
       vim.keymap.set("n", "<leader>cd", "<cmd>Telescope zoxide list<cr>", { desc = "Telescope zoxide" })
     end,
   },
@@ -705,7 +705,7 @@ local default_plugins = {
     "fdschmidt93/telescope-egrepify.nvim",
     dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
     config = function(_, opts)
-      require("telescope").load_extension "egrepify"
+      require("telescope").load_extension("egrepify")
     end,
     event = "VeryLazy",
   },
@@ -714,7 +714,7 @@ local default_plugins = {
     "tsakirist/telescope-lazy.nvim",
     dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
     config = function(_, opts)
-      require("telescope").load_extension "lazy"
+      require("telescope").load_extension("lazy")
       vim.keymap.set("n", "<leader>L", "<cmd>Telescope lazy<cr>", { desc = "Telescope Lazy" })
     end,
     event = "VeryLazy",
@@ -780,7 +780,7 @@ local default_plugins = {
       -- Auto save on every change
       vim.api.nvim_create_autocmd({ "InsertLeave", "TextChanged" }, {
         callback = function()
-          local file = vim.fn.expand "%"
+          local file = vim.fn.expand("%")
           -- vim.notify(file)
           local condition = file ~= "NvimTree_1"
             and file ~= "[lazy]"
@@ -791,10 +791,10 @@ local default_plugins = {
             and vim.bo.buftype == ""
 
           if condition then
-            vim.cmd [[
+            vim.cmd([[
               silent! GuessIndent
               noa w
-            ]]
+            ]])
           end
         end,
         nested = true,
@@ -803,7 +803,7 @@ local default_plugins = {
       -- Guess Indent on bufload
       vim.api.nvim_create_autocmd({ "BufNew", "VimEnter", "BufEnter" }, {
         callback = function()
-          local file = vim.fn.expand "%"
+          local file = vim.fn.expand("%")
           -- vim.notify(file)
           local condition = file ~= "NvimTree_1"
             and file ~= "[lazy]"
@@ -814,7 +814,7 @@ local default_plugins = {
             and vim.bo.buftype == ""
 
           if condition then
-            vim.cmd [[ silent! GuessIndent ]]
+            vim.cmd([[ silent! GuessIndent ]])
           end
         end,
       })
@@ -886,9 +886,9 @@ local default_plugins = {
     version = "*", -- Use for stability; omit to use `main` branch for the latest features
     event = "VeryLazy",
     config = function()
-      require("nvim-surround").setup {
+      require("nvim-surround").setup({
         -- Configuration here, or leave empty to use defaults
-      }
+      })
     end,
   },
 
@@ -912,7 +912,7 @@ local default_plugins = {
   {
     "ibhagwan/smartyank.nvim",
     config = function(_, opts)
-      require("smartyank").setup {
+      require("smartyank").setup({
         highlight = {
           enabled = true, -- highlight yanked text
           higroup = "IncSearch", -- highlight group of yanked text
@@ -942,7 +942,7 @@ local default_plugins = {
         -- For advanced customization set to a lua function returning a boolean
         -- for example, the default condition is:
         -- validate_yank = function() return vim.v.operator == "y" end,
-      }
+      })
     end,
     event = "VeryLazy",
   },
@@ -1090,7 +1090,7 @@ local default_plugins = {
     "Makaze/telescope-cmdline.nvim",
     -- branch = "command-builder",
     config = function(_, opts)
-      require("telescope").load_extension "cmdline"
+      require("telescope").load_extension("cmdline")
     end,
     dependencies = {
       "nvim-telescope/telescope.nvim",
@@ -1182,9 +1182,9 @@ local default_plugins = {
     -- (instead of fetching a binary from the github release). Requires Rust >= 1.65
 
     config = function()
-      require("sniprun").setup {
+      require("sniprun").setup({
         -- your options
-      }
+      })
     end,
   },
 
@@ -1195,7 +1195,7 @@ local default_plugins = {
     -- event = "VeryLazy",
     lazy = false,
     config = function()
-      local harpoon = require "harpoon"
+      local harpoon = require("harpoon")
 
       -- REQUIRED
       harpoon:setup()
@@ -1238,9 +1238,9 @@ local default_plugins = {
   {
     "anuvyklack/hydra.nvim",
     config = function(_, opts)
-      local Hydra = require "hydra"
-      local harpoon = require "harpoon"
-      local harpoon_hydra = Hydra {
+      local Hydra = require("hydra")
+      local harpoon = require("harpoon")
+      local harpoon_hydra = Hydra({
         name = "HARPOON",
         mode = { "n", "x" },
         body = "<leader>p",
@@ -1320,7 +1320,7 @@ local default_plugins = {
           },
         },
         exit = true,
-      }
+      })
 
       --       local dap = require "dap"
       --
@@ -1435,7 +1435,7 @@ local default_plugins = {
   {
     "mfussenegger/nvim-dap-python",
     config = function(_, opts)
-      require("dap-python").setup "~/.virtualenvs/debugpy/bin/python"
+      require("dap-python").setup("~/.virtualenvs/debugpy/bin/python")
     end,
     cmd = "Dap",
     dependencies = { "mfussenegger/nvim-dap", "rcarriga/nvim-dap-ui" },
@@ -1469,9 +1469,9 @@ local default_plugins = {
       -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
       -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/**.md"
       "BufReadPre "
-        .. vim.fn.expand "~"
+        .. vim.fn.expand("~")
         .. "/vaults/**.md",
-      "BufNewFile " .. vim.fn.expand "~" .. "/vaults/**.md",
+      "BufNewFile " .. vim.fn.expand("~") .. "/vaults/**.md",
       -- "VeryLazy",
     },
     dependencies = {
@@ -1583,7 +1583,7 @@ local default_plugins = {
   {
     "bullets-vim/bullets.vim",
     init = function(_, opts)
-      vim.cmd [[
+      vim.cmd([[
         let g:bullets_set_mappings = 0 " disable adding default key mappings, default = 1
 
         " default = []
@@ -1609,7 +1609,7 @@ local default_plugins = {
           \ ['nmap', '<<', '<Plug>(bullets-promote)'],
           \ ['vmap', '<', '<Plug>(bullets-promote)'],
           \ ]
-      ]]
+      ]])
     end,
     cmd = "EnableBullets",
     lazy = false,
@@ -1623,8 +1623,32 @@ local default_plugins = {
 
   {
     "Makaze/watch.nvim",
-    branch = "compatibility",
+    -- branch = "compatibility",
     cmd = { "WatchStart", "WatchStop", "WatchFile" },
+    opts = {
+      -- The default refresh rate for a new watcher in milliseconds. Defaults
+      -------------------- Default configuration -----------------------------
+      -- to `500`.
+      -- refresh_rate = 2000,
+      -- Whether to automatically delete the buffer when stopping a watcher.
+      -- Defaults to `false`.
+      close_on_stop = false,
+      -- Configuration for split window option
+      split = {
+        -- Whether to automatically delete the buffer when stopping a
+        -- watcher. Defaults to `false`.
+        enabled = true,
+        -- Where to place the split (above|below|right|left). Defaults to
+        -- `below`.
+        position = "right",
+        -- The size of the split in rows (or columns if position is right or
+        -- left). Defaults to `nil`.
+        -- size = 25,
+        -- Whether to focus on the newly created split watcher. Defaults to
+        -- `true`.
+        focus = false,
+      },
+    },
   },
 
   -- { "powerman/vim-plugin-AnsiEsc", config = false, lazy = false },
@@ -1635,6 +1659,16 @@ local default_plugins = {
   --   -- config = true,
   --   event = "VeryLazy",
   -- },
+
+  {
+    "nooproblem/git-worktree.nvim",
+    dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },
+    config = function(_, opts)
+      require("git-worktree").setup()
+      require("telescope").load_extension("git_worktree")
+    end,
+    event = "VeryLazy",
+  },
 }
 
 local config = require("core.utils").load_config()

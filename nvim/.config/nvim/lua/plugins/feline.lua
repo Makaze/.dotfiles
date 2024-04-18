@@ -1,5 +1,7 @@
 local present, feline = pcall(require, "feline")
-if not present then return end
+if not present then
+  return
+end
 
 local theme = {
   aqua = "#7AB0DF",
@@ -15,7 +17,7 @@ local theme = {
   pink = "#D997C8",
   purple = "#C397D8",
   red = "#F87070",
-  yellow = "#FFE59E"
+  yellow = "#FFE59E",
 }
 
 vim.api.nvim_set_hl(0, "StatusLine", { bg = "#101317", fg = "#7AB0DF" })
@@ -59,12 +61,18 @@ local modes = setmetatable({
   ["r?"] = "C",
   ["!"] = "SH",
   ["t"] = "T",
-}, { __index = function() return "-" end })
+}, {
+  __index = function()
+    return "-"
+  end,
+})
 
 local component = {}
 
 component.vim_mode = {
-  provider = function() return modes[vim.api.nvim_get_mode().mode] end,
+  provider = function()
+    return modes[vim.api.nvim_get_mode().mode]
+  end,
   hl = function()
     return {
       fg = "bg",
@@ -213,9 +221,39 @@ component.file_type = {
 component.scroll_bar = {
   provider = function()
     local chars = setmetatable({
-      " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ",
-      " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ", " ",
-    }, { __index = function() return " " end })
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+      " ",
+    }, {
+      __index = function()
+        return " "
+      end,
+    })
     local line_ratio = vim.api.nvim_win_get_cursor(0)[1] / vim.api.nvim_buf_line_count(0)
     local position = math.floor(line_ratio * 100)
 

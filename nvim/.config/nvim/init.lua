@@ -1,4 +1,4 @@
-require "core"
+r quire("core")
 
 local custom_init_path = vim.api.nvim_get_runtime_file("lua/custom/init.lua", false)[1]
 vim.g.python3_host_prog = "/usr/bin/python3"
@@ -9,7 +9,7 @@ end
 
 require("core.utils").load_mappings()
 
-local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
 -- bootstrap lazy.nvim!
 if not vim.loop.fs_stat(lazypath) then
@@ -20,5 +20,5 @@ end
 dofile(vim.g.base46_cache .. "defaults")
 vim.opt.rtp:prepend(lazypath)
 vim.g.loaded_python_provider = 1
-require "plugins"
-require "settings"
+require("plugins")
+require("settings")

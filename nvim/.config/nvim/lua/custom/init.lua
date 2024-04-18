@@ -7,6 +7,6 @@
 -- })
 
 -- VSCode format
-vim.g.vscode_snippets_path = vim.fn.stdpath "config" .. "/lua/custom/configs/vscode_snippets"
+vim.g.vscode_snippets_path = vim.fn.stdpath("config") .. "/lua/custom/configs/vscode_snippets"
 -- lua format
-vim.g.lua_snippets_path = vim.fn.stdpath "config" .. "/lua/custom/configs/lua_snippets"
+vim.g.lua_snippets_path = vim.fn.stdpath("config") .. "/lua/custom/configs/lua_snippets"

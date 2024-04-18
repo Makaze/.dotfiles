@@ -41,10 +41,10 @@ set.list = true
 set.conceallevel = 1
 -- Global winbar
 set.winbar = "%m %f"
-vim.cmd [[ hi WinBar guibg=#22222200 ]]
-vim.cmd [[ hi WinBarNC guibg=#22222200 ]]
+vim.cmd([[ hi WinBar guibg=#22222200 ]])
+vim.cmd([[ hi WinBarNC guibg=#22222200 ]])
 
-vim.cmd [[
+vim.cmd([[
   " inoremap <Left>  <NOP>
   " inoremap <Right> <NOP>
   " inoremap <Up>    <NOP>
@@ -150,7 +150,7 @@ vim.cmd [[
 
   " Poor person's goto defintition preview
   nnoremap <leader>gpd <cmd>vsplit \| lua vim.lsp.buf.definition()<cr>
-]]
+]])
 
 -- Move selection in visual mode
 vim.keymap.set("v", "J", ":m '>+1<CR>gv", { silent = true })
@@ -163,7 +163,7 @@ local function cursor_lock(lock)
     local augid = vim.api.nvim_create_augroup("user_cursor_lock_" .. win, { clear = true })
     if not lock or vim.w.cursor_lock == lock then
       vim.w.cursor_lock = nil
-      vim.notify "Cursor lock disabled"
+      vim.notify("Cursor lock disabled")
       return
     end
     local cb = function()
@@ -179,35 +179,35 @@ local function cursor_lock(lock)
       callback = cb,
     })
     cb()
-    vim.notify "Cursor lock enabled"
+    vim.notify("Cursor lock enabled")
   end
 end
 
 -- cursor_lock "z"
 
-vim.keymap.set("n", "<leader>zt", cursor_lock "t", { desc = "Toggle cursor lock (top)" })
-vim.keymap.set("n", "<leader>zz", cursor_lock "z", { desc = "Toggle cursor lock (middle)" })
-vim.keymap.set("n", "<leader>zb", cursor_lock "b", { desc = "Toggle cursor lock (bottom)" })
+vim.keymap.set("n", "<leader>zt", cursor_lock("t"), { desc = "Toggle cursor lock (top)" })
+vim.keymap.set("n", "<leader>zz", cursor_lock("z"), { desc = "Toggle cursor lock (middle)" })
+vim.keymap.set("n", "<leader>zb", cursor_lock("b"), { desc = "Toggle cursor lock (bottom)" })
 
-vim.cmd [[ packadd cfilter ]]
+vim.cmd([[ packadd cfilter ]])
 
 if vim.g.vscode then
-  vim.cmd "source /home/makaze/.config/nvim/lua/settings/vscode.vim"
+  vim.cmd("source /home/makaze/.config/nvim/lua/settings/vscode.vim")
 end
 
 if vim.g.neovide then
   vim.o.guifont = "BlexMono Nerd Font:h10"
 end
 
-vim.cmd [[
+vim.cmd([[
   hi NotifyBackground guibg=#55555500
-]]
+]])
 
 -- vim.keymap.set("v", "<leader>fs", function()
 --   vim.lsp.buf.format { async = true }
 -- end)
 
-vim.cmd [[
+vim.cmd([[
 function ExportHighlights(file)
   try
     let lines = execute('hi')
@@ -278,7 +278,7 @@ endfunction
 
 xnoremap =i   :'<,'>call AdjustIndent('x')<cr>
 nnoremap =i   :call AdjustIndent('n')<cr>
-]]
+]])
 
 -- Close meaningless buffers
 function ClearBuffers()
@@ -305,8 +305,8 @@ vim.api.nvim_create_autocmd({ "VimEnter" }, {
 function ListBuffers()
   local buffers = vim.api.nvim_list_bufs()
 
-  print "Buffer Type    |  Buffer Name"
-  print "----------------------------------"
+  print("Buffer Type    |  Buffer Name")
+  print("----------------------------------")
   for _, buf in ipairs(buffers) do
     local buf_type = vim.api.nvim_buf_get_option(buf, "buftype")
     local buf_name = vim.api.nvim_buf_get_name(buf)

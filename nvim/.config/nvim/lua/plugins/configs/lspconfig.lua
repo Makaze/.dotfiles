@@ -1,9 +1,9 @@
 dofile(vim.g.base46_cache .. "lsp")
-require "nvchad.lsp"
+require("nvchad.lsp")
 
 local M = {}
-local utils = require "core.utils"
-local navic = require "nvim-navic"
+local utils = require("core.utils")
+local navic = require("nvim-navic")
 
 -- export on_attach & capabilities for custom lspconfigs
 
@@ -17,7 +17,7 @@ M.on_attach = function(client, bufnr)
     require("nvchad.signature").setup(client)
   end
 
-  if not utils.load_config().ui.lsp_semantic_tokens and not client.supports_method "textDocument/semanticTokens" then
+  if not utils.load_config().ui.lsp_semantic_tokens and not client.supports_method("textDocument/semanticTokens") then
     client.server_capabilities.semanticTokensProvider = nil
   end
   navic.attach(client, bufnr)
@@ -50,7 +50,7 @@ M.capabilities.textDocument.completion.completionItem = {
   },
 }
 
-require("lspconfig").lua_ls.setup {
+require("lspconfig").lua_ls.setup({
   on_attach = M.on_attach,
   capabilities = M.capabilities,
   -- root_dir = function()
@@ -69,17 +69,17 @@ require("lspconfig").lua_ls.setup {
         library = {
           -- vim.fn.stdpath "data",
           -- vim.api.nvim_get_runtime_file("lua", true),
-          vim.fn.stdpath "config" .. "/lua",
-          vim.fn.expand "$VIMRUNTIME/lua",
-          vim.fn.expand "$VIMRUNTIME/lua/vim/lsp",
-          vim.fn.stdpath "data" .. "/lazy/ui/nvchad_types",
-          vim.fn.stdpath "data" .. "/lazy/lazy.nvim/lua/lazy",
+          vim.fn.stdpath("config") .. "/lua",
+          vim.fn.expand("$VIMRUNTIME/lua"),
+          vim.fn.expand("$VIMRUNTIME/lua/vim/lsp"),
+          vim.fn.stdpath("data") .. "/lazy/ui/nvchad_types",
+          vim.fn.stdpath("data") .. "/lazy/lazy.nvim/lua/lazy",
         },
         maxPreload = 10000,
         preloadFileSize = 10000,
       },
     },
   },
-}
+})
 
 return M

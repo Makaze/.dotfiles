@@ -59,6 +59,10 @@ M.general = {
       ":Telescope diagnostics<CR>",
       "Search diagnostics",
     },
+    ["<leader>ft"] = {
+      ":Telescope git_worktree<CR>",
+      "Search git worktrees",
+    },
     ["<C-i>"] = {
       ":Inspect<CR>",
       "Inspect node under cursor",

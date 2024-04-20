@@ -95,13 +95,20 @@ local default_plugins = {
     event = "VeryLazy",
   },
 
-  -- {
-  --   "nvim-treesitter/nvim-treesitter-textobjects",
-  --   config = function(_, opts)
-  --     require("nvim-treesitter.configs").setup(opts)
-  --   end,
-  --   event = "VeryLazy",
-  -- },
+  {
+    "nvim-treesitter/nvim-treesitter-textobjects",
+    config = function(_, opts)
+      require("nvim-treesitter.configs").setup(opts)
+    end,
+    event = "VeryLazy",
+  },
+
+  {
+    "echasnovski/mini.ai",
+    version = '*',
+    config = true,
+    event = "VeryLazy"
+  },
 
   {
     "nvim-treesitter/nvim-treesitter-context",
@@ -116,6 +123,12 @@ local default_plugins = {
         hi TreesitterContextBottom gui=underline guisp=Grey
       ]])
     end,
+    event = "VeryLazy",
+  },
+
+  {
+    "yorickpeterse/nvim-tree-pairs",
+    config = true,
     event = "VeryLazy",
   },
 
@@ -1667,6 +1680,19 @@ local default_plugins = {
       require("git-worktree").setup()
       require("telescope").load_extension("git_worktree")
     end,
+    event = "VeryLazy",
+  },
+
+  {
+    "NStefan002/screenkey.nvim",
+    cmd = "Screenkey",
+    version = "*",
+    config = true,
+  },
+
+  {
+    "tamton-aquib/keys.nvim",
+    config = true,
     event = "VeryLazy",
   },
 }

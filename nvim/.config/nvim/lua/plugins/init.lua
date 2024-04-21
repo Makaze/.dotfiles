@@ -104,6 +104,14 @@ local default_plugins = {
   },
 
   {
+    "chrisgrieser/nvim-various-textobjs",
+    config = function(_, opts)
+      require("nvim-treesitter.configs").setup(opts)
+    end,
+    event = "VeryLazy",
+  },
+
+  {
     "echasnovski/mini.ai",
     version = '*',
     config = true,

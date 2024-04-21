@@ -105,17 +105,15 @@ local default_plugins = {
 
   {
     "chrisgrieser/nvim-various-textobjs",
-    config = function(_, opts)
-      require("nvim-treesitter.configs").setup(opts)
-    end,
+    opts = { useDefaultKeymaps = true },
     event = "VeryLazy",
   },
 
   {
     "echasnovski/mini.ai",
-    version = '*',
+    version = "*",
     config = true,
-    event = "VeryLazy"
+    event = "VeryLazy",
   },
 
   {

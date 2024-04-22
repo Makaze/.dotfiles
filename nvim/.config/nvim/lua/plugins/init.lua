@@ -104,10 +104,16 @@ local default_plugins = {
   },
 
   {
+    "chrisgrieser/nvim-various-textobjs",
+    opts = { useDefaultKeymaps = true },
+    event = "VeryLazy",
+  },
+
+  {
     "echasnovski/mini.ai",
-    version = '*',
+    version = "*",
     config = true,
-    event = "VeryLazy"
+    event = "VeryLazy",
   },
 
   {

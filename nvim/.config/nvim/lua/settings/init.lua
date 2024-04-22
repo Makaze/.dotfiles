@@ -72,46 +72,63 @@ vim.cmd([[
   nnoremap <C-p>   "+p
   nnoremap d       "_d
   xnoremap d       "_d
+  vnoremap d       "_d
   nnoremap c       "_c
   xnoremap c       "_c
+  vnoremap c       "_c
   nnoremap s       "_s
   xnoremap s       "_s
+  vnoremap s       "_s
 
   nnoremap diw     "_diw
   xnoremap diw     "_diw
+  vnoremap diw     "_diw
   nnoremap ciw     "_ciw
   xnoremap ciw     "_ciw
+  vnoremap ciw     "_ciw
   nnoremap siw     "_siw
   xnoremap siw     "_siw
+  vnoremap siw     "_siw
   
   nnoremap daw     "_daw
   xnoremap daw     "_daw
+  vnoremap daw     "_daw
   nnoremap caw     "_caw
   xnoremap caw     "_caw
+  vnoremap caw     "_caw
   nnoremap saw     "_saw
   xnoremap saw     "_saw
+  vnoremap saw     "_saw
 
   nnoremap dip     "_dip
   xnoremap dip     "_dip
+  vnoremap dip     "_dip
   nnoremap cip     "_cip
   xnoremap cip     "_cip
+  vnoremap cip     "_cip
   nnoremap sip     "_sip
   xnoremap sip     "_sip
+  vnoremap sip     "_sip
   
   nnoremap dap     "_dap
   xnoremap dap     "_dap
+  vnoremap dap     "_dap
   nnoremap cap     "_cap
   xnoremap cap     "_cap
+  vnoremap cap     "_cap
   nnoremap sap     "_sap
   xnoremap sap     "_sap
+  vnoremap sap     "_sap
 
   nnoremap x       <NOP>
 
   " Visual paste always before selections
   xnoremap p       P
+  vnoremap p       P
 
   nnoremap <C-z>   u
   xnoremap <C-z>   u
+  vnoremap <C-z>   u
   inoremap <C-z>   <C-o>u
   inoremap <C-y>   <C-o><C-r>
 

@@ -82,7 +82,7 @@
   "vim-snippets": { "branch": "master", "commit": "393d980157b8149b3ff65a48bc4aae24dca9c846" },
   "vim-swap": { "branch": "master", "commit": "9358bfdc5e377aa13e7c2c2dd8699ba32b0dcf83" },
   "vim-unimpaired": { "branch": "master", "commit": "6d44a6dc2ec34607c41ec78acf81657248580bf1" },
-  "watch.nvim": { "branch": "master", "commit": "91e6d71c6fcd7ef80a3d6bd34ee181f92050bd93" },
+  "watch.nvim": { "branch": "in-terminal", "commit": "33f8edd09b29a984f97c9c5124dc5a5694b505df" },
   "which-key.nvim": { "branch": "main", "commit": "4433e5ec9a507e5097571ed55c02ea9658fb268a" },
   "zen-mode.nvim": { "branch": "main", "commit": "78557d972b4bfbb7488e17b5703d25164ae64e6a" }
 }

@@ -295,7 +295,61 @@ endfunction
 
 xnoremap =i   :'<,'>call AdjustIndent('x')<cr>
 nnoremap =i   :call AdjustIndent('n')<cr>
+
+
+" Term commands
+function! SendToTerminal(bufnr, command)
+  " Save current window and cursor position
+  let save_view = winsaveview()
+  
+  " Switch to the terminal buffer
+  execute 'buffer ' . a:bufnr
+  
+  " Send the command to the terminal buffer
+  call chansend(b:terminal_job_id, a:command . "\n")
+  
+  " Restore window and cursor position
+  call winrestview(save_view)
+endfunction
 ]])
+
+-- Function to send a command to a terminal buffer and execute it
+function SendToTerminal(bufnr, command)
+  local A = vim.api
+  -- Save the current window ID and cursor position
+  local original_win = A.nvim_get_current_win()
+  local original_cursor = A.nvim_win_get_cursor(original_win)
+
+  -- Check if terminal buffer
+  local terminal_window = nil
+  if A.nvim_get_option_value("buftype", { buf = bufnr }) == "terminal" then
+    -- Find the window ID associated with the specified buffer number
+    for _, win in ipairs(A.nvim_list_wins()) do
+      if A.nvim_win_get_buf(win) == bufnr then
+        terminal_window = win
+        break
+      end
+    end
+  end
+
+  -- Switch to the terminal window
+  if terminal_window then
+    A.nvim_set_current_win(terminal_window)
+
+    -- Send the command to the terminal buffer
+    vim.cmd("set modifiable")
+    A.nvim_buf_set_lines(bufnr, 0, -1, false, {})
+    vim.cmd("set nomodified")
+    vim.fn.termopen(command .. "\n")
+    vim.cmd("set modifiable")
+
+    -- Restore the original window and cursor position
+    A.nvim_set_current_win(original_win)
+    A.nvim_win_set_cursor(original_win, original_cursor)
+  else
+    vim.notify("[watch] ERROR: Terminal buffer with bufnr " .. bufnr .. " not found", vim.log.levels.ERROR)
+  end
+end
 
 -- Close meaningless buffers
 function ClearBuffers()

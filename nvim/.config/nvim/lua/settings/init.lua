@@ -167,6 +167,24 @@ vim.cmd([[
 
   " Poor person's goto defintition preview
   nnoremap <leader>gpd <cmd>vsplit \| lua vim.lsp.buf.definition()<cr>
+  
+  let keymap#TildeTable = {
+  \    '<': '>',
+  \    '>': '<',
+  \    '{': '}',
+  \    '}': '{',
+  \    '[': ']',
+  \    ']': '[',
+  \    '(': ')',
+  \    ')': '(',
+  \    '!': '=',
+  \    '=': '!',
+  \    '&': '|',
+  \    '|': '&',
+  \    '/': '\',
+  \    '\': '/',
+  \}
+  nnoremap <expr> ~ 'r' .. get(keymap#TildeTable, getline('.')[getpos('.')[2] - 1], '') .. '<esc>~'
 ]])
 
 -- Move selection in visual mode

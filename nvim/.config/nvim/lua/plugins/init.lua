@@ -404,7 +404,7 @@ local default_plugins = {
         lua = { "stylua" },
         -- Conform will run multiple formatters sequentially
         python = { "black" },
-        go = { "gopls" },
+        go = { "goimports", "gofmt" },
         -- Use a sub-list to run only the first available formatter
         javascript = { "deno" },
         markdown = { "dprint" },
@@ -441,6 +441,31 @@ local default_plugins = {
           }
         end
         require("conform").format({ async = true, lsp_fallback = true, range = range })
+
+        -- Filter by filetype, force spaces for relevant formatter
+        local bufnr = vim.api.nvim_get_current_buf()
+        local force_filetypes = { "go" }
+        if not vim.tbl_contains(force_filetypes, vim.bo[bufnr].filetype) then
+          return
+        end
+        vim.schedule(function()
+          -- Specify your search pattern and replacement pattern
+          local spaces =
+            string.rep(" ", vim.api.nvim_get_option_value("shiftwidth", { buf = vim.api.nvim_get_current_buf() }))
+
+          -- Iterate through each line in the buffer
+          for line_number = 1, vim.fn.line("$") do
+            -- Get the contents of the current line
+            local line_contents = vim.fn.getline(line_number)
+            -- Perform the substitution
+            -- local new_line = string.gsub(line_contents, search_pattern, replacement_pattern)
+            local new_line = line_contents:gsub("^[\t]+", function(match)
+              return string.rep(spaces, #match)
+            end)
+            -- Update the line with the substituted content
+            vim.fn.setline(line_number, new_line)
+          end
+        end)
       end, { range = true })
     end,
     event = "VeryLazy",
@@ -1642,7 +1667,7 @@ local default_plugins = {
 
   {
     "Makaze/watch.nvim",
-    -- branch = "compatibility",
+    branch = "in-terminal",
     cmd = { "WatchStart", "WatchStop", "WatchFile" },
     opts = {
       -- The default refresh rate for a new watcher in milliseconds. Defaults
@@ -1700,6 +1725,19 @@ local default_plugins = {
     "tamton-aquib/keys.nvim",
     config = true,
     event = "VeryLazy",
+  },
+
+  {
+    "HakonHarnes/img-clip.nvim",
+    event = "VeryLazy",
+    opts = {
+      -- add options here
+      -- or leave it empty to use the default settings
+    },
+    keys = {
+      -- suggested keymap
+      { "<leader>p", "<cmd>PasteImage<cr>", desc = "Paste image from system clipboard" },
+    },
   },
 }
 

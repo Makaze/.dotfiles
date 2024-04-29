@@ -627,7 +627,10 @@ local default_plugins = {
   {
     "nvim-telescope/telescope.nvim",
     dependencies = {
-      "nvim-telescope/telescope-fzf-native.nvim",
+      {
+        "nvim-telescope/telescope-fzf-native.nvim",
+        build = "cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build",
+      },
       "nvim-treesitter/nvim-treesitter",
       "nvim-lua/plenary.nvim",
     },
@@ -644,6 +647,7 @@ local default_plugins = {
       telescope.setup(opts)
 
       -- load extensions
+
       for _, ext in ipairs(opts.extensions_list) do
         telescope.load_extension(ext)
       end
@@ -1690,7 +1694,7 @@ local default_plugins = {
         -- size = 25,
         -- Whether to focus on the newly created split watcher. Defaults to
         -- `true`.
-        focus = false,
+        focus = true,
       },
     },
   },

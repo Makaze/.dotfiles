@@ -173,56 +173,6 @@ local default_plugins = {
     },
   },
 
-  -- {
-  --   "rmagatti/goto-preview",
-  --   config = true,
-  --   opts = {
-  --     default_mappings = true,
-  --   },
-  --   event = "VeryLazy",
-  -- },
-
-  -- VSCode theme
-  -- {
-  --   "Mofiqul/vscode.nvim",
-  --   config = function(_, opts)
-  --     -- Lua:
-  --     -- For dark theme (neovim's default)
-  --     -- vim.o.background = "dark"
-  --     -- For light theme
-  --     -- vim.o.background = 'light'
-  --
-  --     local c = require("vscode.colors").get_colors()
-  --     require("vscode").setup {
-  --       -- Alternatively set style in setup
-  --       style = "dark",
-  --
-  --       -- Enable transparent background
-  --       transparent = true,
-  --
-  --       -- Enable italic comment
-  --       italic_comments = true,
-  --
-  --       -- Disable nvim-tree background color
-  --       disable_nvimtree_bg = true,
-  --
-  --       -- Override colors (see ./lua/vscode/colors.lua)
-  --       color_overrides = {
-  --         -- vscLineNumber = "#FFFFFF",
-  --       },
-  --
-  --       -- Override highlight groups (see ./lua/vscode/theme.lua)
-  --       group_overrides = {
-  --         -- this supports the same val table as vim.api.nvim_set_hl
-  --         -- use colors from this colorscheme by requiring vscode.colors!
-  --         Cursor = { fg = c.vscDarkBlue, bg = c.vscLightGreen, bold = true },
-  --       },
-  --     }
-  --     require("vscode").load()
-  --   end,
-  --   event = "VeryLazy",
-  -- },
-
   {
     "SmiteshP/nvim-navic",
     config = function(_, opts)
@@ -1169,17 +1119,15 @@ local default_plugins = {
     event = "VeryLazy",
   },
 
-  -- or, to get rolling updates
-  -- install with yarn or npm
   {
-    "iamcco/markdown-preview.nvim",
-    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-    build = "cd app && npm install",
-    init = function()
-      vim.g.mkdp_filetypes = { "markdown" }
+    "toppair/peek.nvim",
+    event = { "VeryLazy" },
+    build = "deno task --quiet build:fast",
+    config = function()
+      require("peek").setup()
+      vim.api.nvim_create_user_command("PeekOpen", require("peek").open, {})
+      vim.api.nvim_create_user_command("PeekClose", require("peek").close, {})
     end,
-    ft = { "markdown" },
-    event = "VeryLazy",
   },
 
   -- {
@@ -1283,136 +1231,136 @@ local default_plugins = {
     end,
   },
 
-  {
-    "anuvyklack/hydra.nvim",
-    config = function(_, opts)
-      local Hydra = require("hydra")
-      local harpoon = require("harpoon")
-      local harpoon_hydra = Hydra({
-        name = "HARPOON",
-        mode = { "n", "x" },
-        body = "<leader>p",
-        config = {
-          color = "blue",
-          invoke_on_body = true,
-          hint = {
-            position = "bottom",
-            border = "rounded",
-            -- type = "window",
-          },
-        },
-        heads = {
-          {
-            "h",
-            function()
-              harpoon:list():select(1)
-            end,
-            {
-              desc = (function()
-                local val = harpoon:list():get(1) or ""
-                if val then
-                  val = val.value
-                end
-                return val or "1"
-              end)(),
-              color = "blue",
-            },
-          },
-          {
-            "j",
-            function()
-              harpoon:list():select(2)
-            end,
-            {
-              desc = (function()
-                local val = harpoon:list():get(2) or ""
-                if val then
-                  val = val.value
-                end
-                return val or "2"
-              end)(),
-              color = "blue",
-            },
-          },
-          {
-            "k",
-            function()
-              harpoon:list():select(3)
-            end,
-            {
-              desc = (function()
-                local val = harpoon:list():get(3) or ""
-                if val then
-                  val = val.value
-                end
-                return val or "3"
-              end)(),
-              color = "blue",
-            },
-          },
-          {
-            "l",
-            function()
-              harpoon:list():select(4)
-            end,
-            {
-              desc = (function()
-                local val = harpoon:list():get(4) or ""
-                if val then
-                  val = val.value
-                end
-                return val or "4"
-              end)(),
-              color = "blue",
-            },
-          },
-        },
-        exit = true,
-      })
-
-      --       local dap = require "dap"
-      --
-      --       local dap_hint = [[
-      --  ^ ^                          DAP
-      --  _n_: Step over   _s_: Continue/Start   _b_: Breakpoint     _K_: Eval
-      --  _i_: Step into   _x_: Quit             ^ ^                 ^ ^
-      --  _o_: Step out    _X_: Stop             ^ ^
-      --  _c_: To cursor   _C_: Toggle UI
-      --  ^
-      --  ^ ^              _q_: exit
-      -- ]]
-      --
-      --       local dap_hydra = Hydra {
-      --         hint = dap_hint,
-      --         config = {
-      --           color = "pink",
-      --           invoke_on_body = true,
-      --           hint = {
-      --             float_opts = {
-      --               border = "rounded",
-      --             },
-      --           },
-      --         },
-      --         name = "DAP",
-      --         mode = { "n" },
-      --         body = "<leader>hd",
-      --         heads = {
-      --           { "n", dap.step_over, { silent = true } },
-      --           { "i", dap.step_into, { silent = true } },
-      --           { "o", dap.step_out, { silent = true } },
-      --           { "c", dap.run_to_cursor, { silent = true } },
-      --           { "s", dap.continue, { silent = true } },
-      --           { "x", ":lua require'dap'.disconnect({ terminateDebuggee = false })<CR>", { exit = true, silent = true } },
-      --           { "X", dap.close, { silent = true } },
-      --           { "C", ":lua require('dapui').toggle()<cr>:DapVirtualTextForceRefresh<CR>", { silent = true } },
-      --           { "b", dap.toggle_breakpoint, { silent = true } },
-      --           { "K", ":lua require('dap.ui.widgets').hover()<CR>", { silent = true } },
-      --           { "q", nil, { exit = true, nowait = true } },
-      --         },
-      --       }
-    end,
-    event = "VeryLazy",
-  },
+  -- {
+  --   "anuvyklack/hydra.nvim",
+  --   config = function(_, opts)
+  --     local Hydra = require("hydra")
+  --     local harpoon = require("harpoon")
+  --     local harpoon_hydra = Hydra({
+  --       name = "HARPOON",
+  --       mode = { "n", "x" },
+  --       body = "<leader>p",
+  --       config = {
+  --         color = "blue",
+  --         invoke_on_body = true,
+  --         hint = {
+  --           position = "bottom",
+  --           border = "rounded",
+  --           -- type = "window",
+  --         },
+  --       },
+  --       heads = {
+  --         {
+  --           "h",
+  --           function()
+  --             harpoon:list():select(1)
+  --           end,
+  --           {
+  --             desc = (function()
+  --               local val = harpoon:list():get(1) or ""
+  --               if val then
+  --                 val = val.value
+  --               end
+  --               return val or "1"
+  --             end)(),
+  --             color = "blue",
+  --           },
+  --         },
+  --         {
+  --           "j",
+  --           function()
+  --             harpoon:list():select(2)
+  --           end,
+  --           {
+  --             desc = (function()
+  --               local val = harpoon:list():get(2) or ""
+  --               if val then
+  --                 val = val.value
+  --               end
+  --               return val or "2"
+  --             end)(),
+  --             color = "blue",
+  --           },
+  --         },
+  --         {
+  --           "k",
+  --           function()
+  --             harpoon:list():select(3)
+  --           end,
+  --           {
+  --             desc = (function()
+  --               local val = harpoon:list():get(3) or ""
+  --               if val then
+  --                 val = val.value
+  --               end
+  --               return val or "3"
+  --             end)(),
+  --             color = "blue",
+  --           },
+  --         },
+  --         {
+  --           "l",
+  --           function()
+  --             harpoon:list():select(4)
+  --           end,
+  --           {
+  --             desc = (function()
+  --               local val = harpoon:list():get(4) or ""
+  --               if val then
+  --                 val = val.value
+  --               end
+  --               return val or "4"
+  --             end)(),
+  --             color = "blue",
+  --           },
+  --         },
+  --       },
+  --       exit = true,
+  --     })
+  --
+  --     --       local dap = require "dap"
+  --     --
+  --     --       local dap_hint = [[
+  --     --  ^ ^                          DAP
+  --     --  _n_: Step over   _s_: Continue/Start   _b_: Breakpoint     _K_: Eval
+  --     --  _i_: Step into   _x_: Quit             ^ ^                 ^ ^
+  --     --  _o_: Step out    _X_: Stop             ^ ^
+  --     --  _c_: To cursor   _C_: Toggle UI
+  --     --  ^
+  --     --  ^ ^              _q_: exit
+  --     -- ]]
+  --     --
+  --     --       local dap_hydra = Hydra {
+  --     --         hint = dap_hint,
+  --     --         config = {
+  --     --           color = "pink",
+  --     --           invoke_on_body = true,
+  --     --           hint = {
+  --     --             float_opts = {
+  --     --               border = "rounded",
+  --     --             },
+  --     --           },
+  --     --         },
+  --     --         name = "DAP",
+  --     --         mode = { "n" },
+  --     --         body = "<leader>hd",
+  --     --         heads = {
+  --     --           { "n", dap.step_over, { silent = true } },
+  --     --           { "i", dap.step_into, { silent = true } },
+  --     --           { "o", dap.step_out, { silent = true } },
+  --     --           { "c", dap.run_to_cursor, { silent = true } },
+  --     --           { "s", dap.continue, { silent = true } },
+  --     --           { "x", ":lua require'dap'.disconnect({ terminateDebuggee = false })<CR>", { exit = true, silent = true } },
+  --     --           { "X", dap.close, { silent = true } },
+  --     --           { "C", ":lua require('dapui').toggle()<cr>:DapVirtualTextForceRefresh<CR>", { silent = true } },
+  --     --           { "b", dap.toggle_breakpoint, { silent = true } },
+  --     --           { "K", ":lua require('dap.ui.widgets').hover()<CR>", { silent = true } },
+  --     --           { "q", nil, { exit = true, nowait = true } },
+  --     --         },
+  --     --       }
+  --   end,
+  --   event = "VeryLazy",
+  -- },
 
   {
     "Rawnly/gist.nvim",
@@ -1736,11 +1684,11 @@ local default_plugins = {
     event = "VeryLazy",
     opts = {
       -- add options here
-      -- or leave it empty to use the default settings
+      -- or leave it empty to use the default settin<C-v>s
     },
     keys = {
       -- suggested keymap
-      { "<leader>p", "<cmd>PasteImage<cr>", desc = "Paste image from system clipboard" },
+      { "<leader><C-v>", "<cmd>PasteImage<cr>", desc = "Paste image from system clipboard" },
     },
   },
 }

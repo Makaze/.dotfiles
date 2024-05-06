@@ -45,22 +45,10 @@ vim.cmd([[ hi WinBar guibg=#22222200 ]])
 vim.cmd([[ hi WinBarNC guibg=#22222200 ]])
 
 vim.cmd([[
-  " inoremap <Left>  <NOP>
-  " inoremap <Right> <NOP>
-  " inoremap <Up>    <NOP>
-  " inoremap <Down>  <NOP>
-  " nnoremap <Left>  <NOP>
-  " nnoremap <Right> <NOP>
-  " nnoremap <Up>    <NOP>
-  " nnoremap <Down>  <NOP>
   nnoremap <Left>  :echoe "Use h instead"<CR>
   nnoremap <Right> :echoe "Use l instead"<CR>
   nnoremap <Up>    :echoe "Use k instead"<CR>
   nnoremap <Down>  :echoe "Use j instead"<CR>
-  " inoremap <Left>  <NOP>
-  " inoremap <Right> <NOP>
-  " inoremap <Up>    <NOP>
-  " inoremap <Down>  <NOP>
 
   nnoremap <C-s>   <CMD>w<CR>
   xnoremap <C-s>   <CMD>w<CR>
@@ -70,55 +58,64 @@ vim.cmd([[
   xnoremap <C-p>   "+p
   nnoremap <C-c>   "+y
   nnoremap <C-p>   "+p
-  nnoremap d       "_d
-  xnoremap d       "_d
-  vnoremap d       "_d
-  nnoremap c       "_c
-  xnoremap c       "_c
-  vnoremap c       "_c
-  nnoremap s       "_s
-  xnoremap s       "_s
-  vnoremap s       "_s
 
-  nnoremap diw     "_diw
-  xnoremap diw     "_diw
-  vnoremap diw     "_diw
-  nnoremap ciw     "_ciw
-  xnoremap ciw     "_ciw
-  vnoremap ciw     "_ciw
-  nnoremap siw     "_siw
-  xnoremap siw     "_siw
-  vnoremap siw     "_siw
-  
-  nnoremap daw     "_daw
-  xnoremap daw     "_daw
-  vnoremap daw     "_daw
-  nnoremap caw     "_caw
-  xnoremap caw     "_caw
-  vnoremap caw     "_caw
-  nnoremap saw     "_saw
-  xnoremap saw     "_saw
-  vnoremap saw     "_saw
+  " Paste clipboard by default
+  nnoremap <leader>p "+p
+  nnoremap <leader>P "+P
+  xnoremap <leader>p "+p
+  xnoremap <leader>P "+P
+  vnoremap <leader>p "+p
+  vnoremap <leader>P "+P
 
-  nnoremap dip     "_dip
-  xnoremap dip     "_dip
-  vnoremap dip     "_dip
-  nnoremap cip     "_cip
-  xnoremap cip     "_cip
-  vnoremap cip     "_cip
-  nnoremap sip     "_sip
-  xnoremap sip     "_sip
-  vnoremap sip     "_sip
-  
-  nnoremap dap     "_dap
-  xnoremap dap     "_dap
-  vnoremap dap     "_dap
-  nnoremap cap     "_cap
-  xnoremap cap     "_cap
-  vnoremap cap     "_cap
-  nnoremap sap     "_sap
-  xnoremap sap     "_sap
-  vnoremap sap     "_sap
+  " nnoremap d       "_d
+  " xnoremap d       "_d
+  " vnoremap d       "_d
+  " nnoremap c       "_c
+  " xnoremap c       "_c
+  " vnoremap c       "_c
+  " nnoremap s       "_s
+  " xnoremap s       "_s
+  " vnoremap s       "_s
+  "
+  " nnoremap diw     "_diw
+  " xnoremap diw     "_diw
+  " vnoremap diw     "_diw
+  " nnoremap ciw     "_ciw
+  " xnoremap ciw     "_ciw
+  " vnoremap ciw     "_ciw
+  " nnoremap siw     "_siw
+  " xnoremap siw     "_siw
+  " vnoremap siw     "_siw
+  " 
+  " nnoremap daw     "_daw
+  " xnoremap daw     "_daw
+  " vnoremap daw     "_daw
+  " nnoremap caw     "_caw
+  " xnoremap caw     "_caw
+  " vnoremap caw     "_caw
+  " nnoremap saw     "_saw
+  " xnoremap saw     "_saw
+  " vnoremap saw     "_saw
+  "
+  " nnoremap dip     "_dip
+  " xnoremap dip     "_dip
+  " vnoremap dip     "_dip
+  " nnoremap cip     "_cip
+  " xnoremap cip     "_cip
+  " vnoremap cip     "_cip
+  " nnoremap sip     "_sip
+  " xnoremap sip     "_sip
+  " vnoremap sip     "_sip
+  " 
+  " nnoremap dap     "_dap
+  " xnoremap dap     "_dap
+  " vnoremap dap     "_dap
+  " nnoremap cap     "_cap
+  " xnoremap cap     "_cap
+  " vnoremap cap     "_cap
+  " nnoremap sap     "_sap
+  " xnoremap sap     "_sap
+  " vnoremap sap     "_sap
 
   nnoremap x       <NOP>
 

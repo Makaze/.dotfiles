@@ -54,6 +54,14 @@ vim.cmd([[
   xnoremap <C-s>   <CMD>w<CR>
   inoremap <C-s>   <CMD>w<CR>
 
+  " Splits
+  nnoremap <leader>- <CMD>split<CR>
+  xnoremap <leader>- <CMD>split<CR>
+  vnoremap <leader>- <CMD>split<CR>
+  nnoremap <leader>\ <CMD>vsplit<CR>
+  xnoremap <leader>\ <CMD>vsplit<CR>
+  vnoremap <leader>\ <CMD>vsplit<CR>
+
   xnoremap <C-c>   "+y
   xnoremap <C-p>   "+p
   nnoremap <C-c>   "+y

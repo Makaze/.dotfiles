@@ -926,7 +926,7 @@ local default_plugins = {
         },
         osc52 = {
           enabled = true,
-          -- escseq = 'tmux',         -- use tmux escape sequence, only enable if
+          escseq = "tmux", -- use tmux escape sequence, only enable if
           -- you're using tmux and have issues (see #4)
           ssh_only = false, -- false to OSC52 yank also in local sessions
           silent = false, -- true to disable the "n chars copied" echo

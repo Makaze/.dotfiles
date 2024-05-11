@@ -356,7 +356,7 @@ local default_plugins = {
         python = { "black" },
         go = { "goimports", "gofmt" },
         -- Use a sub-list to run only the first available formatter
-        javascript = { "deno" },
+        javascript = { "deno_fmt" },
         markdown = { "dprint" },
         html = { "djlint" },
         css = { { "prettierd", "prettier" } },
@@ -391,31 +391,31 @@ local default_plugins = {
           }
         end
         require("conform").format({ async = true, lsp_fallback = true, range = range })
-
-        -- Filter by filetype, force spaces for relevant formatter
-        local bufnr = vim.api.nvim_get_current_buf()
-        local force_filetypes = { "go" }
-        if not vim.tbl_contains(force_filetypes, vim.bo[bufnr].filetype) then
-          return
-        end
-        vim.schedule(function()
-          -- Specify your search pattern and replacement pattern
-          local spaces =
-            string.rep(" ", vim.api.nvim_get_option_value("shiftwidth", { buf = vim.api.nvim_get_current_buf() }))
-
-          -- Iterate through each line in the buffer
-          for line_number = 1, vim.fn.line("$") do
-            -- Get the contents of the current line
-            local line_contents = vim.fn.getline(line_number)
-            -- Perform the substitution
-            -- local new_line = string.gsub(line_contents, search_pattern, replacement_pattern)
-            local new_line = line_contents:gsub("^[\t]+", function(match)
-              return string.rep(spaces, #match)
-            end)
-            -- Update the line with the substituted content
-            vim.fn.setline(line_number, new_line)
-          end
-        end)
+        --
+        -- -- Filter by filetype, force spaces for relevant formatter
+        -- local bufnr = vim.api.nvim_get_current_buf()
+        -- local force_filetypes = { "go" }
+        -- if not vim.tbl_contains(force_filetypes, vim.bo[bufnr].filetype) then
+        --   return
+        -- end
+        -- vim.schedule(function()
+        --   -- Specify your search pattern and replacement pattern
+        --   local spaces =
+        --     string.rep(" ", vim.api.nvim_get_option_value("shiftwidth", { buf = vim.api.nvim_get_current_buf() }))
+        --
+        --   -- Iterate through each line in the buffer
+        --   for line_number = 1, vim.fn.line("$") do
+        --     -- Get the contents of the current line
+        --     local line_contents = vim.fn.getline(line_number)
+        --     -- Perform the substitution
+        --     -- local new_line = string.gsub(line_contents, search_pattern, replacement_pattern)
+        --     local new_line = line_contents:gsub("^[\t]+", function(match)
+        --       return string.rep(spaces, #match)
+        --     end)
+        --     -- Update the line with the substituted content
+        --     vim.fn.setline(line_number, new_line)
+        --   end
+        -- end)
       end, { range = true })
     end,
     event = "VeryLazy",
@@ -1400,7 +1400,7 @@ local default_plugins = {
     keys = {
       {
         mode = { "v", "n" },
-        "<Leader>-",
+        "<leader>.",
         "<cmd>Oil<cr>",
         desc = "Open Oil",
       },
@@ -1690,6 +1690,11 @@ local default_plugins = {
       -- suggested keymap
       { "<leader><C-v>", "<cmd>PasteImage<cr>", desc = "Paste image from system clipboard" },
     },
+  },
+
+  {
+    "hiphish/rainbow-delimiters.nvim",
+    lazy = false,
   },
 }
 

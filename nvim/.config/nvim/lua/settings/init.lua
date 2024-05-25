@@ -190,6 +190,13 @@ vim.cmd([[
   \    '\': '/',
   \}
   nnoremap <expr> ~ 'r' .. get(keymap#TildeTable, getline('.')[getpos('.')[2] - 1], '') .. '<esc>~'
+
+  " Select all
+  nnoremap <M-a> ggVG
+
+  " Add semi to end of line
+  nnoremap <leader>; A;<esc>
+  xnoremap <leader>; A;<esc>
 ]])
 
 -- Move selection in visual mode

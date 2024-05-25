@@ -26,3 +26,9 @@ alias r='ranger'
 alias fm='ranger'
 alias s='ncspot'
 alias n='nvim'
+
+alias zd='cd $(fd -Htd . | fzf)'
+fdh() {
+    fdir=$(find ~ -type d | fzf --color=16 --reverse --exact --preview="ls -l {}" --preview-window=right:60%:wrap --bind "ctrl-s:toggle-sort" --bind "ctrl-r:toggle-preview" --bind "ctrl-t:toggle-preview-wrap")
+    cd "$fdir" || return
+}

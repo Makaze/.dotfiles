@@ -845,6 +845,12 @@ local default_plugins = {
     "tpope/vim-fugitive",
     config = false,
     lazy = false,
+    init = function()
+      vim.cmd([[
+      nnoremap Gpp :G push
+      nnoremap Gpl :G pull
+      ]])
+    end,
   },
   -- {
   --   "tpope/vim-surround",
@@ -957,29 +963,29 @@ local default_plugins = {
     lazy = false,
   },
 
-  -- {
-  --   "folke/flash.nvim",
-  --   event = "VeryLazy",
-  --   opts = {},
-  --   -- stylua: ignore
-  --   keys = {
-  --     { "<C-f>", mode = { "n", "x", "o" },
-  --         function() require("flash").jump() end, desc = "Flash"
-  --     },
-  --     { "<leader>sf", mode = { "n", "o", "x" },
-  --         function() require("flash").treesitter() end, desc = "Flash Treesitter"
-  --     },
-  --     { "<leader>rs", mode = "o",
-  --         function() require("flash").remote() end, desc = "Remote Flash"
-  --     },
-  --     -- { "<leader>ts", mode = { "o", "x" },
-  --     --     function() require("flash").treesitter_search() end, desc = "Treesitter Search"
-  --     -- },
-  --     -- { "<C-s>", mode = { "c" },
-  --     --     function() require("flash").toggle() end, desc = "Toggle Flash Search"
-  --     -- },
-  --   },
-  -- },
+  {
+    "folke/flash.nvim",
+    -- event = "VeryLazy",
+    opts = {},
+    -- stylua: ignore
+    keys = {
+      { "<C-f>", mode = { "n", "x", "o" },
+          function() require("flash").jump() end, desc = "Flash"
+      },
+      { "<leader>sf", mode = { "n", "o", "x" },
+          function() require("flash").treesitter() end, desc = "Flash Treesitter"
+      },
+      -- { "<leader>rs", mode = "o",
+      --     function() require("flash").remote() end, desc = "Remote Flash"
+      -- },
+      -- { "<leader>ts", mode = { "o", "x" },
+      --     function() require("flash").treesitter_search() end, desc = "Treesitter Search"
+      -- },
+      -- { "<C-s>", mode = { "c" },
+      --     function() require("flash").toggle() end, desc = "Toggle Flash Search"
+      -- },
+    },
+  },
 
   {
     "hedyhli/outline.nvim",
@@ -1694,6 +1700,11 @@ local default_plugins = {
 
   {
     "hiphish/rainbow-delimiters.nvim",
+    lazy = false,
+  },
+
+  {
+    "mechatroner/rainbow_csv",
     lazy = false,
   },
 }

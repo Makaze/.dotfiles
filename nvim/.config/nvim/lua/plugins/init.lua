@@ -847,8 +847,8 @@ local default_plugins = {
     lazy = false,
     init = function()
       vim.cmd([[
-      nnoremap Gpp :G push
-      nnoremap Gpl :G pull
+      nnoremap <Leader>Gp :G push<CR>
+      nnoremap <Leader>Gl :G pull<CR>
       ]])
     end,
   },

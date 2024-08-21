@@ -1424,7 +1424,7 @@ local default_plugins = {
     "rcarriga/nvim-dap-ui",
     config = true,
     cmd = "Dap",
-    dependencies = { "mfussenegger/nvim-dap" },
+    dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
   },
   {
     "theHamsta/nvim-dap-virtual-text",
@@ -1437,7 +1437,7 @@ local default_plugins = {
   {
     "mfussenegger/nvim-dap-python",
     config = function(_, opts)
-      require("dap-python").setup("~/.virtualenvs/debugpy/bin/python")
+      require("dap-python").setup()
     end,
     cmd = "Dap",
     dependencies = { "mfussenegger/nvim-dap", "rcarriga/nvim-dap-ui" },

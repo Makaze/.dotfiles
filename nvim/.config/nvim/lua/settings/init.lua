@@ -197,6 +197,9 @@ vim.cmd([[
   " Add semi to end of line
   nnoremap <leader>; A;<esc>
   xnoremap <leader>; A;<esc>
+
+  " Run python file
+  nnoremap <silent> <leader>rr <CMD>execute 'split <BAR> terminal python3 ' . expand('%:p') . '; sleep 1; exit'<CR>
 ]])
 
 -- Move selection in visual mode

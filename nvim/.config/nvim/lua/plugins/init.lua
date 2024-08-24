@@ -360,6 +360,7 @@ local default_plugins = {
         markdown = { "dprint" },
         html = { "djlint" },
         css = { { "prettierd", "prettier" } },
+        c = { "clang-format" },
       },
       format_on_save = function(bufnr)
         local ignore_filetypes = { "markdown", "md" }

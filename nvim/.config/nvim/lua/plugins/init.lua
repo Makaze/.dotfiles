@@ -1708,6 +1708,16 @@ local default_plugins = {
     "mechatroner/rainbow_csv",
     lazy = false,
   },
+
+  {
+    "jpalardy/vim-slime",
+    config = function(opts)
+      vim.cmd([[
+        let g:slime_target = "tmux"
+      ]])
+    end,
+    lazy = false,
+  },
 }
 
 local config = require("core.utils").load_config()

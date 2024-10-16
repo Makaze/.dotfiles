@@ -357,10 +357,14 @@ local default_plugins = {
         go = { "goimports", "gofmt" },
         -- Use a sub-list to run only the first available formatter
         javascript = { "deno_fmt" },
-        markdown = { "dprint" },
+        markdown = { "dprint", "prettier" },
         html = { "djlint" },
         css = { { "prettierd", "prettier" } },
         c = { "clang-format" },
+        elixir = { "mix" },
+        eelixir = { "mix" },
+        heex = { "mix" },
+        surface = { "mix" },
       },
       format_on_save = function(bufnr)
         local ignore_filetypes = { "markdown", "md" }

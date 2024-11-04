@@ -796,7 +796,7 @@ local default_plugins = {
           if condition then
             vim.cmd([[
               silent! GuessIndent
-              noa w
+              noa up
             ]])
           end
         end,

@@ -31,8 +31,9 @@ set.completeopt = "menu,menuone,noselect,noinsert,preview"
 
 set.foldcolumn = "0"
 set.foldlevel = 20
-set.foldmethod = "expr"
-set.foldexpr = "nvim_treesitter#foldexpr()"
+set.foldmethod = "manual"
+-- set.foldmethod = "expr"
+-- set.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.o.fillchars = [[eob:~,fold:+,foldopen:,foldsep:|,foldclose:]]
 -- set.listchars = "space:·,tab:->\\"
 set.listchars = { tab = "│->", leadmultispace = "│···", trail = "-", space = "·" }

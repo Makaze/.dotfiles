@@ -156,11 +156,12 @@ return {
       name = "barbecue",
       version = "*",
       dependencies = {
-         "SmiteshP/nvim-navic",
+         -- "SmiteshP/nvim-navic",
          "nvim-tree/nvim-web-devicons", -- optional dependency
       },
       opts = {
          -- configurations go here
+         -- attach_navic = false,
       },
       init = function()
          vim.cmd([[ hi barbecue_normal guibg=#28282800 ]])
@@ -504,19 +505,74 @@ return {
    {
       "mfussenegger/nvim-dap",
       config = function(_, opts)
-         dofile(vim.g.base46_cache .. "dap")
+         -- dofile(vim.g.base46_cache .. "dap")
+
+         vim.fn.sign_define(
+            "DapBreakpoint",
+            { text = "", texthl = "DiagnosticSignError", linehl = "", numhl = "DiagnosticSignError" }
+         )
+         vim.fn.sign_define(
+            "DapBreakpointCondition",
+            { text = "", texthl = "DiagnosticSignWarn", linehl = "", numhl = "DiagnosticSignWarn" }
+         )
+         vim.fn.sign_define(
+            "DapBreakpointRejected",
+            { text = "", texthl = "DiagnosticSignError", linehl = "", numhl = "DiagnosticSignError" }
+         )
+         vim.fn.sign_define(
+            "DapStopped",
+            { text = "", texthl = "Function", linehl = "CursorLine", numhl = "CursorLine" }
+         )
+
+         local dap = require("dap")
+         -- vim.keymap.set("n", "<leader>b", dap.toggle_breakpoint)
+         vim.keymap.set({ "n", "t" }, "<F5>", dap.continue, { desc = "DAP: Continue" })
+         dap.listeners.after.event_initialized["me.dap.keys"] = function()
+            vim.keymap.set({ "n", "t" }, "<F3>", dap.terminate, { desc = "DAP: Terminate" })
+            vim.keymap.set("n", "<F6>", dap.step_over, { desc = "DAP: Step Over" })
+            vim.keymap.set("n", "<F7>", dap.step_out, { desc = "DAP: Step Out" })
+            vim.keymap.set("n", "<F8>", dap.step_into, { desc = "DAP: Step Into" })
+         end
+         local reset_keys = function()
+            pcall(vim.keymap.del, "n", "<F3>")
+            pcall(vim.keymap.del, "n", "<F5>")
+            pcall(vim.keymap.del, "n", "<F6>")
+            pcall(vim.keymap.del, "n", "<F7>")
+            pcall(vim.keymap.del, "n", "<F8>")
+         end
+         dap.listeners.after.event_terminated["me.dap.keys"] = reset_keys
+         dap.listeners.after.disconnected["me.dap.keys"] = reset_keys
       end,
+      keys = {
+         {
+            mode = { "n" },
+            "<leader>b",
+            function()
+               require("dap").toggle_breakpoint()
+            end,
+            desc = "DAP: Toggle Breakpoint",
+         },
+      },
    },
    {
       "rcarriga/nvim-dap-ui",
       config = true,
-      cmd = "Dap",
       dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" },
+      keys = {
+         {
+            mode = { "n" },
+            "<F12>",
+            function()
+               require("dapui").toggle()
+            end,
+            desc = "Toggle Dap UI",
+         },
+      },
    },
    {
       "theHamsta/nvim-dap-virtual-text",
       config = true,
-      cmd = "Dap",
+      cmd = "DapContinue",
       dependencies = { "mfussenegger/nvim-dap", "rcarriga/nvim-dap-ui" },
    },
    -- python debug
@@ -526,7 +582,7 @@ return {
       config = function(_, opts)
          require("dap-python").setup()
       end,
-      cmd = "Dap",
+      ft = "python",
       dependencies = { "mfussenegger/nvim-dap", "rcarriga/nvim-dap-ui" },
    },
 
@@ -534,7 +590,7 @@ return {
    {
       "leoluz/nvim-dap-go",
       config = true,
-      cmd = "Dap",
+      ft = "go",
       dependencies = { "mfussenegger/nvim-dap", "rcarriga/nvim-dap-ui" },
    },
 

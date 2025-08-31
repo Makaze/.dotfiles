@@ -25,7 +25,7 @@ M.base46 = {
       -- },
       -- Highlights cursor line
       CursorLine = {
-         bg = { "black", 2 },
+         bg = { "black", 3 },
       },
       Visual = {
          bg = { "black", 4 },
@@ -76,6 +76,14 @@ M.ui = {
       "dap",
       "hop",
       "trouble",
+   },
+}
+
+M.mappings = {
+   disabled = {
+      n = {
+         ["<leader>b"] = "",
+      },
    },
 }
 

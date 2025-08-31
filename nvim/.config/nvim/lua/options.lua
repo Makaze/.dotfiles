@@ -2,16 +2,18 @@ require("nvchad.options")
 
 -- add yours here!
 
--- local o = vim.o
--- o.cursorlineopt ='both' -- to enable cursorline!
---
+local o = vim.o
 local set = vim.opt
-set.expandtab = true
-set.smarttab = true
-set.shiftwidth = 4
-set.tabstop = 4
-set.mouse = "a"
-set.wrap = true
+
+o.cursorlineopt = "both" -- to enable cursorline!
+o.cursorline = true
+--
+o.expandtab = true
+o.smarttab = true
+o.shiftwidth = 4
+o.tabstop = 4
+o.mouse = "a"
+o.wrap = true
 
 set.hlsearch = true
 set.incsearch = true
@@ -30,7 +32,6 @@ set.termguicolors = true
 
 set.relativenumber = false
 set.number = true
-set.cursorline = true
 set.whichwrap = "b,s,h,l,<,>,[,]"
 
 set.hidden = true

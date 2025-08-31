@@ -1,6 +1,0 @@
-{
-    "diagnostics.globals": [
-        "vim",
-        "send_and_run_command_to_terminal"
-    ]
-}

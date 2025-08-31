@@ -1,3 +1,10 @@
+require("nvchad.options")
+
+-- add yours here!
+
+-- local o = vim.o
+-- o.cursorlineopt ='both' -- to enable cursorline!
+--
 local set = vim.opt
 set.expandtab = true
 set.smarttab = true
@@ -36,7 +43,7 @@ set.foldmethod = "manual"
 -- set.foldexpr = "v:lua.vim.treesitter.foldexpr()"
 vim.o.fillchars = [[eob:~,fold:+,foldopen:,foldsep:|,foldclose:]]
 -- set.listchars = "space:·,tab:->\\"
-set.listchars = { tab = "│->", leadmultispace = "│···", trail = "-", space = "·" }
+set.listchars = { tab = "│->", leadmultispace = "····", trail = "-", space = "·" }
 set.list = true
 -- vim.o.colorcolumn = "81,121"
 set.conceallevel = 1
@@ -209,29 +216,29 @@ vim.keymap.set("v", "K", ":m '<-2<CR>gv", { silent = true })
 
 -- Credit to @maaaddi from ThePrimeagen Discord
 local function cursor_lock(lock)
-  return function()
-    local win = vim.api.nvim_get_current_win()
-    local augid = vim.api.nvim_create_augroup("user_cursor_lock_" .. win, { clear = true })
-    if not lock or vim.w.cursor_lock == lock then
-      vim.w.cursor_lock = nil
-      vim.notify("Cursor lock disabled")
-      return
-    end
-    local cb = function()
-      if vim.w.cursor_lock then
-        vim.cmd("silent normal z" .. vim.w.cursor_lock)
+   return function()
+      local win = vim.api.nvim_get_current_win()
+      local augid = vim.api.nvim_create_augroup("user_cursor_lock_" .. win, { clear = true })
+      if not lock or vim.w.cursor_lock == lock then
+         vim.w.cursor_lock = nil
+         vim.notify("Cursor lock disabled")
+         return
       end
-    end
-    vim.w.cursor_lock = lock
-    vim.api.nvim_create_autocmd("CursorMoved", {
-      desc = "Cursor lock for window " .. win,
-      buffer = 0,
-      group = augid,
-      callback = cb,
-    })
-    cb()
-    vim.notify("Cursor lock enabled")
-  end
+      local cb = function()
+         if vim.w.cursor_lock then
+            vim.cmd("silent normal z" .. vim.w.cursor_lock)
+         end
+      end
+      vim.w.cursor_lock = lock
+      vim.api.nvim_create_autocmd("CursorMoved", {
+         desc = "Cursor lock for window " .. win,
+         buffer = 0,
+         group = augid,
+         callback = cb,
+      })
+      cb()
+      vim.notify("Cursor lock enabled")
+   end
 end
 
 -- cursor_lock "z"
@@ -243,11 +250,11 @@ vim.keymap.set("n", "<leader>zb", cursor_lock("b"), { desc = "Toggle cursor lock
 vim.cmd([[ packadd cfilter ]])
 
 if vim.g.vscode then
-  vim.cmd("source /home/makaze/.config/nvim/lua/settings/vscode.vim")
+   vim.cmd("source /home/makaze/.config/nvim/lua/settings/vscode.vim")
 end
 
 if vim.g.neovide then
-  vim.o.guifont = "BlexMono Nerd Font:h10"
+   vim.o.guifont = "BlexMono Nerd Font:h10"
 end
 
 vim.cmd([[
@@ -363,136 +370,133 @@ endfunction
 
 -- Function to send a command to a terminal buffer and execute it
 function SendToTerminal(bufnr, command)
-  local A = vim.api
-  -- Save the current window ID and cursor position
-  local original_win = A.nvim_get_current_win()
-  local original_cursor = A.nvim_win_get_cursor(original_win)
+   local A = vim.api
+   -- Save the current window ID and cursor position
+   local original_win = A.nvim_get_current_win()
+   local original_cursor = A.nvim_win_get_cursor(original_win)
 
-  -- Check if terminal buffer
-  local terminal_window = nil
-  if A.nvim_get_option_value("buftype", { buf = bufnr }) == "terminal" then
-    -- Find the window ID associated with the specified buffer number
-    for _, win in ipairs(A.nvim_list_wins()) do
-      if A.nvim_win_get_buf(win) == bufnr then
-        terminal_window = win
-        break
+   -- Check if terminal buffer
+   local terminal_window = nil
+   if A.nvim_get_option_value("buftype", { buf = bufnr }) == "terminal" then
+      -- Find the window ID associated with the specified buffer number
+      for _, win in ipairs(A.nvim_list_wins()) do
+         if A.nvim_win_get_buf(win) == bufnr then
+            terminal_window = win
+            break
+         end
       end
-    end
-  end
+   end
 
-  -- Switch to the terminal window
-  if terminal_window then
-    A.nvim_set_current_win(terminal_window)
+   -- Switch to the terminal window
+   if terminal_window then
+      A.nvim_set_current_win(terminal_window)
 
-    -- Send the command to the terminal buffer
-    vim.cmd("set modifiable")
-    A.nvim_buf_set_lines(bufnr, 0, -1, false, {})
-    vim.cmd("set nomodified")
-    vim.fn.termopen(command .. "\n")
-    vim.cmd("set modifiable")
+      -- Send the command to the terminal buffer
+      vim.cmd("set modifiable")
+      A.nvim_buf_set_lines(bufnr, 0, -1, false, {})
+      vim.cmd("set nomodified")
+      vim.fn.termopen(command .. "\n")
+      vim.cmd("set modifiable")
 
-    -- Restore the original window and cursor position
-    A.nvim_set_current_win(original_win)
-    A.nvim_win_set_cursor(original_win, original_cursor)
-  else
-    vim.notify("[watch] ERROR: Terminal buffer with bufnr " .. bufnr .. " not found", vim.log.levels.ERROR)
-  end
+      -- Restore the original window and cursor position
+      A.nvim_set_current_win(original_win)
+      A.nvim_win_set_cursor(original_win, original_cursor)
+   else
+      vim.notify("[watch] ERROR: Terminal buffer with bufnr " .. bufnr .. " not found", vim.log.levels.ERROR)
+   end
 end
 
 -- Close meaningless buffers
 function ClearBuffers()
-  local buffers = vim.api.nvim_list_bufs()
+   local buffers = vim.api.nvim_list_bufs()
 
-  for _, buf in ipairs(buffers) do
-    local buf_type = vim.api.nvim_buf_get_option(buf, "buftype")
-    local buf_name = vim.api.nvim_buf_get_name(buf)
+   for _, buf in ipairs(buffers) do
+      local buf_type = vim.api.nvim_buf_get_option(buf, "buftype")
+      local buf_name = vim.api.nvim_buf_get_name(buf)
 
-    if buf_name == "" or string.find(buf_name, "NvimTree") or buf_type == "nofile" then
-      vim.api.nvim_buf_delete(buf, { force = true })
-    end
+      if buf_name == "" or string.find(buf_name, "NvimTree") or buf_type == "nofile" then
+         vim.api.nvim_buf_delete(buf, { force = true })
+      end
 
-    -- print(string.format("%-15s|  %s", buf_type, buf_name))
-  end
+      -- print(string.format("%-15s|  %s", buf_type, buf_name))
+   end
 end
 vim.api.nvim_create_autocmd({ "VimEnter" }, {
-  callback = function()
-    ClearBuffers()
-  end,
+   callback = function()
+      ClearBuffers()
+   end,
 })
 
 -- Print list of buffers
 function ListBuffers()
-  local buffers = vim.api.nvim_list_bufs()
+   local buffers = vim.api.nvim_list_bufs()
 
-  print("Buffer Type    |  Buffer Name")
-  print("----------------------------------")
-  for _, buf in ipairs(buffers) do
-    local buf_type = vim.api.nvim_buf_get_option(buf, "buftype")
-    local buf_name = vim.api.nvim_buf_get_name(buf)
+   print("Buffer Type    |  Buffer Name")
+   print("----------------------------------")
+   for _, buf in ipairs(buffers) do
+      local buf_type = vim.api.nvim_buf_get_option(buf, "buftype")
+      local buf_name = vim.api.nvim_buf_get_name(buf)
 
-    -- Check if the buffer has a name, if not, assign "[No Name]" as its name
-    if buf_name == "" then
-      buf_name = "[No Name]"
-    end
+      -- Check if the buffer has a name, if not, assign "[No Name]" as its name
+      if buf_name == "" then
+         buf_name = "[No Name]"
+      end
 
-    print(string.format("%-15s|  %s", buf_type, buf_name))
-  end
+      print(string.format("%-15s|  %s", buf_type, buf_name))
+   end
 end
 
 -- Replace buffer's contents with a command and preserve the cursor
 local function UpdateBufferContent(command)
-  return function()
-    -- Save current cursor position
-    local saveCursor = vim.api.nvim_win_get_cursor(0)
+   return function()
+      -- Save current cursor position
+      local saveCursor = vim.api.nvim_win_get_cursor(0)
 
-    -- Execute your command and capture its output
-    local output = vim.fn.systemlist(command)
+      -- Execute your command and capture its output
+      local output = vim.fn.systemlist(command)
 
-    -- Strip ANSI color codes from the output
-    local strippedOutput = {}
-    for _, line in ipairs(output) do
-      local strippedLine = line:gsub("\27%[[%d;]*[mK]", "") -- Remove ANSI escape sequences
-      table.insert(strippedOutput, strippedLine)
-    end
+      -- Strip ANSI color codes from the output
+      local strippedOutput = {}
+      for _, line in ipairs(output) do
+         local strippedLine = line:gsub("\27%[[%d;]*[mK]", "") -- Remove ANSI escape sequences
+         table.insert(strippedOutput, strippedLine)
+      end
 
-    -- Clear the buffer and insert the stripped output
-    vim.api.nvim_buf_set_lines(0, 0, -1, false, strippedOutput)
+      -- Clear the buffer and insert the stripped output
+      vim.api.nvim_buf_set_lines(0, 0, -1, false, strippedOutput)
 
-    -- Restore cursor position
-    vim.api.nvim_win_set_cursor(0, saveCursor)
-  end
+      -- Restore cursor position
+      vim.api.nvim_win_set_cursor(0, saveCursor)
+   end
 end
 
 -- Continually replace buffer contents with command
 function Watch(command, refresh_rate)
-  local uv = vim.loop or vim.uv
+   local uv = vim.loop or vim.uv
 
-  -- Create a new buffer
-  local buf = vim.api.nvim_create_buf(false, true)
-  vim.api.nvim_set_current_buf(buf)
+   -- Create a new buffer
+   local buf = vim.api.nvim_create_buf(false, true)
+   vim.api.nvim_set_current_buf(buf)
 
-  -- Set up a timer to run the function every 500ms
-  local watch_timer = uv.new_timer()
-  watch_timer:start(refresh_rate, refresh_rate, vim.schedule_wrap(UpdateBufferContent(command)))
+   -- Set up a timer to run the function every 500ms
+   local watch_timer = uv.new_timer()
+   watch_timer:start(refresh_rate, refresh_rate, vim.schedule_wrap(UpdateBufferContent(command)))
 
-  local group = vim.api.nvim_create_augroup("my-group", { clear = true })
+   local group = vim.api.nvim_create_augroup("my-group", { clear = true })
 
-  -- Stop the timer when the buffer is unloaded
-  vim.api.nvim_create_autocmd("BufUnload", {
-    group = group,
-    buffer = 0,
-    callback = function()
-      watch_timer:stop()
-    end,
-  })
-  -- Stop the timer when quitting Neovim
-  vim.api.nvim_create_autocmd("VimLeavePre", {
-    group = group,
-    callback = function()
-      watch_timer:stop()
-    end,
-  })
+   -- Stop the timer when the buffer is unloaded
+   vim.api.nvim_create_autocmd("BufUnload", {
+      group = group,
+      buffer = 0,
+      callback = function()
+         watch_timer:stop()
+      end,
+   })
+   -- Stop the timer when quitting Neovim
+   vim.api.nvim_create_autocmd("VimLeavePre", {
+      group = group,
+      callback = function()
+         watch_timer:stop()
+      end,
+   })
 end
-
--- Reload all highlights again
-require("base46").load_all_highlights()

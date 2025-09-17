@@ -209,6 +209,9 @@ vim.cmd([[
 
   " Run python file
   nnoremap <silent> <leader>rr <CMD>execute 'split <BAR> terminal python3 ' . expand('%:p') . '; sleep 1; exit'<CR>
+
+  " Undo highlight on esc
+  nmap <silent> <esc> <cmd>noh<cr>
 ]])
 
 -- Move selection in visual mode

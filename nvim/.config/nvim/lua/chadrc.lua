@@ -34,7 +34,7 @@ M.base46 = {
       IndentBlanklineChar = { fg = "one_bg3" },
       -- IndentBlanklineContextSpaceChar = { fg = "teal" },
 
-      ["@variable"] = { fg = { "red", 0 } },
+      -- ["@variable"] = { fg = { "red", 0 } },
       ["@constant"] = { bold = true },
       ["@variable.member"] = { bold = false },
       ["@property"] = { fg = { "teal", 25 } },

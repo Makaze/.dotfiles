@@ -8,13 +8,14 @@ local options = {
       javascript = { "deno_fmt" },
       markdown = { "dprint", "prettier" },
       html = { "djlint" },
-      css = { { "prettierd", "prettier" } },
+      css = { "prettierd", "prettier" },
       c = { "clang-format" },
       elixir = { "mix" },
       eelixir = { "mix" },
       heex = { "mix" },
       surface = { "mix" },
    },
+   stop_after_first = true,
    format_on_save = function(bufnr)
       local ignore_filetypes = { "markdown", "md" }
       if vim.tbl_contains(ignore_filetypes, vim.bo[bufnr].filetype) then

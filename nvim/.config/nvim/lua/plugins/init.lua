@@ -32,6 +32,11 @@ return {
    { import = "nvchad.blink.lazyspec" },
 
    {
+      "Saghen/blink.cmp",
+      opts = { completion = { list = { selection = { preselect = false } } } },
+   },
+
+   {
       "lukas-reineke/indent-blankline.nvim",
       event = "VeryLazy",
       opts = {
@@ -151,6 +156,16 @@ return {
    },
 
    -- git stuff
+
+   {
+      "lewis6991/gitsigns.nvim",
+      cmd = "Gitsigns",
+      event = false,
+      opts = function()
+         return require("nvchad.configs.gitsigns")
+      end,
+   },
+
    {
       "utilyre/barbecue.nvim",
       name = "barbecue",
@@ -658,4 +673,6 @@ return {
       end,
       lazy = false,
    },
+
+   { "ja-ford/delaytrain.nvim", event = "VeryLazy" },
 }

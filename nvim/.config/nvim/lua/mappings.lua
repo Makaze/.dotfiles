@@ -5,7 +5,14 @@
 local map = vim.keymap.set
 
 map("n", ";", ":", { desc = "CMD enter command mode" })
-map("i", "jk", "<ESC>")
+-- map("i", "jk", "<ESC>")
+map("n", "<leader>k", function(_)
+   vim.diagnostic.open_float()
+end, { desc = "Diagnostic float" })
+
+-- Comment
+map("n", "<leader>/", "gcc", { desc = "toggle comment", remap = true })
+map("v", "<leader>/", "gc", { desc = "toggle comment", remap = true })
 
 -- nvimtree
 map("n", "<C-n>", "<cmd>NvimTreeToggle<CR>", { desc = "nvimtree toggle window" })
@@ -21,6 +28,7 @@ map("n", "<leader>fz", "<cmd>Telescope current_buffer_fuzzy_find<CR>", { desc = 
 map("n", "<leader>cm", "<cmd>Telescope git_commits<CR>", { desc = "telescope git commits" })
 map("n", "<leader>gt", "<cmd>Telescope git_status<CR>", { desc = "telescope git status" })
 map("n", "<leader>pt", "<cmd>Telescope terms<CR>", { desc = "telescope pick hidden term" })
+map("n", "<leader>fd", "<cmd>Telescope diagnostics<CR>", { desc = "telescope pick hidden term" })
 
 map("n", "<leader>th", function()
    require("nvchad.themes").open()
